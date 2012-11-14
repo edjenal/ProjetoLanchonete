@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+			<h:inputHidden value="#{EditarClienteBeans.id_cli}"/>
+			<p:messages/>
+				<table>
+					<tr>
+						<th colspan="2"> Editar Cliente </th>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Nome:" for="nome"/></td>
+						<td><h:inputText id="nome" value="#{EditarClienteBeans.nm_cli}" required="true" requiredMessage="Nome é obrigatório"/></td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="CPF:" for="cpf"/></td>
+						<td><p:inputMask id="cpf" value="#{EditarClienteBeans.cpf_cli}" mask="999.999.999-99" size="14"/></td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Telefone:" for="telefone"/></td>
+						<td><p:inputMask id="telefone" value="#{EditarClienteBeans.tel_cli}" mask="(99)9999-9999" size="13"/></td>
+					</tr>
+				</table>
+				<h:commandButton 
+		  			value="Confirmar" 
+		  			action="#{EditarClienteBeans.update}"/>
+	  			<h:commandButton 
+		  			value="Cancelar" 
+		  			action="/cliente/listar.xhtml"
+		  			immediate="true"/>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

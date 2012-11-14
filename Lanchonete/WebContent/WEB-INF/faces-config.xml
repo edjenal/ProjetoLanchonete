@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+	<!-- Cliente -->
+	<managed-bean>
+		<managed-bean-name>ListarClienteBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.cliente.ListarClienteBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovoClienteBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.cliente.NovoClienteBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarClienteBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.cliente.EditarClienteBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Cliente -->
+	
+	<!-- Categoria -->
+	<managed-bean>
+		<managed-bean-name>ListarCategoriaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.categoria.ListarCategoriaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovaCategoriaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.categoria.NovaCategoriaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarCategoriaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.categoria.EditarCategoriaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Categoria -->
+	
+	<!-- Produto -->
+	<managed-bean>
+		<managed-bean-name>ListarProdutoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.produto.ListarProdutoBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovoProdutoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.produto.NovoProdutoBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarProdutoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.produto.EditarProdutoBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Produto -->
+	
+	<!-- Venda -->
+	<managed-bean>
+		<managed-bean-name>VendaClienteBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.venda.VendaClienteBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>VendaProdutosBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.venda.VendaProdutosBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Venda -->
+</faces-config>

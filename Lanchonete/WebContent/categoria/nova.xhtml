@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+			<p:messages/>
+				<table>
+					<tr>
+						<th> Cadastro de Categoria </th>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Descrição: " for="ds_cat"/></td>
+						<td><h:inputText id="ds_cat" value="#{NovaCategoriaBeans.ds_cat}" required="true" requiredMessage="Descrição é obrigatório!"/>
+						</td>
+					</tr>
+				</table>
+				<h:commandButton 
+		  			value="Cadastrar" 
+		  			action="#{NovaCategoriaBeans.inserir}"/>
+	  			<h:commandButton 
+		  			value="Cancelar" 
+		  			action="/categoria/listar.xhtml"
+		  			immediate="true"/>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

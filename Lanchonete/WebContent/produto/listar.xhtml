@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form>
+				<!-- ListarProdutoBeans -->
+				<h:commandButton value="Novo" action="/produto/novo.xhtml"
+					actionListener="#{ListarProdutoBeans.ocultar}" />
+				<br/>
+				<h:outputText value="Categoria do produto"/>
+				<h:selectOneMenu id="id_cat" value="#{ListarProdutoBeans.id_cat}"> 
+					<f:selectItems value="#{ListarProdutoBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
+				</h:selectOneMenu>
+				<br/>
+				<h:outputText value="Descrição do produto"/>
+				<h:inputText value="#{ListarProdutoBeans.nome}" />
+				<h:commandButton value="Buscar"
+					action="#{ListarProdutoBeans.buscar}" />
+				<h:panelGroup rendered="#{ListarProdutoBeans.mostrarTabela}">
+					<h:dataTable value="#{ListarProdutoBeans.produtoTOs}" border="1"
+						var="rs">
+						<f:facet name="header">Lista de Produtos</f:facet>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Categoria" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_cat}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Descrição" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_prod}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Valor" />
+							</f:facet>
+							<h:outputText value="#{rs.preco_prod_tela}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Funções" />
+							</f:facet>
+							<h:commandButton value="Editar" action="/produto/editar.xhtml"
+								actionListener="#{ListarProdutoBeans.ocultar}">
+								<f:param value="#{rs.id_prod}" name="id_prod" />
+							</h:commandButton>
+							<h:commandButton value="Deletar" action="#{ListarProdutoBeans.deletar}"
+								onclick="if (!confirm('Quer realmente deletar esse Produto?')) return false">
+								<f:param value="#{rs.id_prod}" name="id_prod" />
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+		</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+				<h:inputHidden value="#{VendaProdutosBeans.id_cli}"/>
+				<br/>
+				<h:outputText value="#{VendaProdutosBeans.nm_cli}"/>
+				<h:outputText value="Categoria do produto: "/>
+				<h:selectOneMenu id="id_cat" value="#{VendaProdutosBeans.id_cat}"> 
+					<f:selectItems value="#{VendaProdutosBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
+				</h:selectOneMenu>
+				<br/>
+				<h:outputText value="Descrição do produto"/>
+				<h:inputText value="#{VendaProdutosBeans.nome}" />
+				<h:commandButton value="Buscar"
+					action="#{VendaProdutosBeans.buscar}" />
+				<h:panelGroup id="listaProdutos" rendered="#{VendaProdutosBeans.mostrarTabela}">
+					<h:dataTable value="#{VendaProdutosBeans.produtoTOs}" border="1"
+						var="rs">
+						<f:facet name="header">Produtos</f:facet>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Categoria" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_cat}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Descrição" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_prod}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Valor" />
+							</f:facet>
+							<h:outputText value="#{rs.preco_prod_tela}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Funções" />
+							</f:facet>
+							<h:commandButton value="Escolher" action="#{VendaProdutosBeans.addProduto}">
+								<f:param value="#{rs}" name="produto" />
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<h:panelGroup id="carrinho" rendered="#{VendaProdutosBeans.mostrarTabelaCompras}">
+					<h:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" border="1"
+						var="rs">
+						<f:facet name="header">Produtos Selecionados</f:facet>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Categoria" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_cat}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Descrição" />
+							</f:facet>
+							<h:outputText value="#{rs.ds_prod}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Valor" />
+							</f:facet>
+							<h:outputText value="#{rs.preco_prod_tela}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Funções" />
+							</f:facet>
+							<h:commandButton value="Remover" action="#{VendaProdutosBeans.removerProduto}">
+								<f:param value="#{rs}" name="produto" />
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+		</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+		<h:form>
+			<h:outputText value="Escolha do Cliente"/>
+			<br/>
+			<h:outputText value="Nome do Cliente: "/>
+			<h:inputText value="#{VendaClienteBeans.nome}"/>
+			<h:commandButton value="Buscar" action="#{VendaClienteBeans.buscar}"/>
+			<h:panelGroup rendered="#{VendaClienteBeans.mostrarTabela}">
+				<h:dataTable value="#{VendaClienteBeans.clienteTOs}" border="1" var="rs">
+					<f:facet name="header">Clientes</f:facet>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{rs.nm_cli}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="CPF" />
+						</f:facet>
+						<h:outputText value="#{rs.cpf_cli}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Telefone" />
+						</f:facet>
+						<h:outputText value="#{rs.tel_cli}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>
+						<h:commandButton value="Confirma" action="/venda/produtos.xhtml" actionListener="#{VendaClienteBeans.ocultar}">
+							<f:param value="#{rs.id_cli}" name="id_cli" />
+						</h:commandButton>
+					</h:column>
+				</h:dataTable >
+			</h:panelGroup>
+		</h:form>
+	</f:view>
+	</ui:define>
+</ui:composition>
+</html>
