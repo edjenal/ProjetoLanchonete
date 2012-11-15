@@ -1,5 +1,7 @@
 package managedbeans.venda;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import to.ProdutoTO;
 import bo.CategoriaBO;
 import bo.ClienteBO;
 import bo.ProdutoBO;
+import bo.VendaBO;
 
 public class VendaProdutosBeans {
 	private List<ProdutoTO> produtoTOs;
@@ -19,12 +22,19 @@ public class VendaProdutosBeans {
 	private int id_prod;
 	private boolean mostrarTabela = false;
 	private boolean mostrarTabelaCompras = false;
+	private boolean mostrarFinalizado = false;
 	private List<CategoriaTO> categoria;
+	
+	private Double total = 0.0;
+	private String totalTela;
+	private String desconto ;
+	private String recebido ;
 	
 	private int id_cli;
 	private String nm_cli;
 	
-	private List<ProdutoTO> produtosSelecionados;
+	private List<ProdutoTO> produtosSelecionados = new ArrayList<ProdutoTO>();
+	private Integer qtd_venda = 1;
 	
 	
 	//gets e sets
@@ -76,8 +86,10 @@ public class VendaProdutosBeans {
 		this.id_cli = id_cli;
 	}
 	public String getNm_cli() {
-		ClienteBO clienteBO = new ClienteBO();
-		nm_cli = clienteBO.findByPrimaryKey(getId_cli()).getNm_cli();
+		String vazia  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("nm_cli");
+		if(vazia!=null){
+			nm_cli = vazia;
+		}
 		return nm_cli;
 	}
 	public void setNm_cli(String nm_cli) {
@@ -95,7 +107,45 @@ public class VendaProdutosBeans {
 	public void setMostrarTabelaCompras(boolean mostrarTabelaCompras) {
 		this.mostrarTabelaCompras = mostrarTabelaCompras;
 	}
+	public Integer getQtd_venda() {
+		return qtd_venda;
+	}
+	public void setQtd_venda(Integer qtd_venda) {
+		this.qtd_venda = qtd_venda;
+	}
+	public boolean isMostrarFinalizado() {
+		return mostrarFinalizado;
+	}
+	public void setMostrarFinalizado(boolean mostrarFinalizado) {
+		this.mostrarFinalizado = mostrarFinalizado;
+	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+	public String getTotalTela() {
+		return totalTela;
+	}
+	public void setTotalTela(String totalTela) {
+		this.totalTela = totalTela;
+	}
+	public String getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(String desconto) {
+		this.desconto = desconto;
+	}
+	public String getRecebido() {
+		return recebido;
+	}
+	public void setRecebido(String recebido) {
+		this.recebido = recebido;
+	}
 	//fim dos gets e sets
+	
+	
 	
 	
 	
@@ -117,10 +167,30 @@ public class VendaProdutosBeans {
 	}
 	
 	public String addProduto(){
-		//Como ??? pegar objeto da sessão????
-		Map<String, Object> contexto = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
-		produtosSelecionados.add((ProdutoTO) contexto.get("rs"));
+		String vazia  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_prod");
+		if(vazia!=null){
+			ProdutoTO produtoTO = new ProdutoTO();
+			produtoTO.setId_prod(Integer.parseInt(vazia));
+			produtoTO.setDs_prod(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ds_prod"));
+			produtoTO.setId_cat(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_cat")));
+			produtoTO.setDs_cat(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ds_cat"));
+			produtoTO.setPreco_prod(Double.parseDouble(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("preco_prod")));
+			int qtd = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("qtd_venda"));
+			qtd = qtd == 0 ? qtd = 1 : qtd;
+			produtoTO.setQtd_venda(qtd);
+			boolean add = true;
+			for (int i=0; i<produtosSelecionados.size(); i++){
+				if(produtosSelecionados.get(i).getId_prod() == produtoTO.getId_prod()){
+					produtosSelecionados.get(i).setQtd_venda(produtosSelecionados.get(i).getQtd_venda()+produtoTO.getQtd_venda());
+					add = false;
+				} 
+			}
+			if(add){
+				produtosSelecionados.add(produtoTO);
+			}
+		}
 		mostrarTabelaCompras = true;
+		qtd_venda = 1;
 		return "/venda/produtos.xhtml";
 	}
 	
@@ -128,6 +198,66 @@ public class VendaProdutosBeans {
 		//pegar objeto da sessão
 		Map<String, Object> contexto = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
 		produtosSelecionados.remove((ProdutoTO) contexto.get("rs"));
+		if(produtosSelecionados.isEmpty()){
+			mostrarTabelaCompras = false;
+		}
 		return "/venda/produtos.xhtml";
 	}
+	
+	public String cancelar(){
+		produtosSelecionados = null;
+		nome = null;
+		mostrarTabela = false;
+		mostrarTabelaCompras = false;
+		qtd_venda = 1;
+		total = 0.0;
+		desconto =null;
+		recebido =null;
+		return "/venda/cliente.xhtml";
+	}
+	
+	public String concluir(){
+		if(!produtosSelecionados.isEmpty()){
+			for (int i=0; i<produtosSelecionados.size(); i++){
+				Double preco_qtd = 0.0;
+				preco_qtd += produtosSelecionados.get(i).getQtd_venda()*produtosSelecionados.get(i).getPreco_prod();
+				total += preco_qtd;
+			}
+			totalTela = total.toString().replaceAll("\\.", ",");
+			mostrarFinalizado = true;
+		} else {
+			mostrarFinalizado = false;
+		}
+		
+		return "/venda/produtos.xhtml";
+	}
+	
+	public String retornarCompra(){
+		total = 0.0;
+		totalTela = null;
+		mostrarFinalizado = false;
+		return "/venda/produtos.xhtml";
+	}
+	
+	public String confirmar(){
+		id_cli = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_cli"));
+		desconto = desconto!=null || !desconto.equalsIgnoreCase("") ? desconto.replaceAll("\\.", "").replaceAll(",", ".") : null;
+		recebido = recebido!=null || !recebido.equalsIgnoreCase("") ? recebido.replaceAll("\\.", "").replaceAll(",", ".") : null;
+		//organizar esse erro no Double.parseDouble
+		Double desc = desconto!=null ? Double.parseDouble(desconto) : null;
+		Double rece = recebido!=null ? Double.parseDouble(recebido) : null;
+		Double debito = rece - (desc-total);
+		System.out.println(id_cli);
+		System.out.println(total);
+		System.out.println(desc);
+		System.out.println(rece);
+		System.out.println(debito);
+		/*VendaBO vendaBO = new VendaBO();
+		Date dt_pag_total = debito > 0 ? null : Date.valueOf(getDate());
+		Integer id = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
+		System.out.println("id: ");
+		System.out.println(id);*/
+		return "/venda/produtos.xhtml";
+	}
+	
 }

@@ -10,6 +10,8 @@ public class ProdutoTO {
 	private String ds_cat;
 	private String preco_prod_tela;
 	
+	private Integer qtd_venda;
+	
 	public int getId_prod() {
 		return id_prod;
 	}
@@ -45,6 +47,12 @@ public class ProdutoTO {
 	}
 	public void setPreco_prod_tela(String preco_prod_tela) {
 		this.preco_prod_tela = preco_prod_tela;
+	}
+	public Integer getQtd_venda() {
+		return qtd_venda;
+	}
+	public void setQtd_venda(Integer qtd_venda) {
+		this.qtd_venda = qtd_venda;
 	}
 	
 }

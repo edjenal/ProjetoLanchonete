@@ -45,6 +45,7 @@
 						</f:facet>
 						<h:commandButton value="Confirma" action="/venda/produtos.xhtml" actionListener="#{VendaClienteBeans.ocultar}">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
+							<f:param value="#{rs.nm_cli}" name="nm_cli" />
 						</h:commandButton>
 					</h:column>
 				</h:dataTable >
