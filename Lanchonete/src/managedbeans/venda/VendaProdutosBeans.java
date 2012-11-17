@@ -14,6 +14,7 @@ import bo.CategoriaBO;
 import bo.ClienteBO;
 import bo.ProdutoBO;
 import bo.VendaBO;
+import bo.VendaProdutoBO;
 
 public class VendaProdutosBeans {
 	private List<ProdutoTO> produtoTOs;
@@ -204,15 +205,20 @@ public class VendaProdutosBeans {
 		return "/venda/produtos.xhtml";
 	}
 	
-	public String cancelar(){
-		produtosSelecionados = null;
+	private void cleanBeans(){
+		produtosSelecionados = new ArrayList<ProdutoTO>();
 		nome = null;
 		mostrarTabela = false;
 		mostrarTabelaCompras = false;
+		mostrarFinalizado = false;
 		qtd_venda = 1;
 		total = 0.0;
-		desconto =null;
-		recebido =null;
+		desconto = null;
+		recebido = null;
+	}
+	
+	public String cancelar(){
+		cleanBeans();
 		return "/venda/cliente.xhtml";
 	}
 	
@@ -241,23 +247,24 @@ public class VendaProdutosBeans {
 	
 	public String confirmar(){
 		id_cli = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_cli"));
-		desconto = desconto!=null || !desconto.equalsIgnoreCase("") ? desconto.replaceAll("\\.", "").replaceAll(",", ".") : null;
-		recebido = recebido!=null || !recebido.equalsIgnoreCase("") ? recebido.replaceAll("\\.", "").replaceAll(",", ".") : null;
-		//organizar esse erro no Double.parseDouble
-		Double desc = desconto!=null ? Double.parseDouble(desconto) : null;
-		Double rece = recebido!=null ? Double.parseDouble(recebido) : null;
-		Double debito = rece - (desc-total);
-		System.out.println(id_cli);
-		System.out.println(total);
-		System.out.println(desc);
-		System.out.println(rece);
-		System.out.println(debito);
-		/*VendaBO vendaBO = new VendaBO();
-		Date dt_pag_total = debito > 0 ? null : Date.valueOf(getDate());
-		Integer id = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
-		System.out.println("id: ");
-		System.out.println(id);*/
-		return "/venda/produtos.xhtml";
+		desconto = desconto.replaceAll("\\.", "").replaceAll(",", ".");
+		recebido = recebido.replaceAll("\\.", "").replaceAll(",", ".");
+		Double desc = desconto == null || desconto.equals("") ? 0.0 : Double.parseDouble(desconto);
+		Double rece = recebido==null || recebido.equals("") ? 0.0 : Double.parseDouble(recebido);
+		Double debito = total - (rece + desc);
+		java.util.Date data = new java.util.Date();
+		Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
+		VendaBO vendaBO = new VendaBO();
+		//retorno é o id_venda casatrada
+		Integer id_venda = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
+		//inserindo na tabela venda_produto
+		//id_prod, id_venda, qtd_prod, preco_prod_vendido
+		for(int i = 0; i<produtosSelecionados.size(); i++){
+			VendaProdutoBO vendaProdutoBO = new VendaProdutoBO();
+			vendaProdutoBO.insert(produtosSelecionados.get(i).getId_prod(), id_venda, produtosSelecionados.get(i).getQtd_venda(), produtosSelecionados.get(i).getPreco_prod());
+		}
+		cleanBeans();
+		return "/venda/sucesso.xhtml";
 	}
 	
 }

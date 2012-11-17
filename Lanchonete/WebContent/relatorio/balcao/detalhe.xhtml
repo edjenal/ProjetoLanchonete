@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form>
+				Detalhe da venda
+				<h:inputHidden value="#{RelatorioVendaDetalheBeans.id_venda}"/>
+				<h:inputHidden value="#{RelatorioVendaDetalheBeans.valor_total_venda}"/>
+				    <table>
+				    	<tr>
+				    		<td>Nº da venda: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.id_venda}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td>Cliente: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.nm_cliente}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td>Data da venda: </td>
+				    		<td>
+				    			<h:outputText value="#{RelatorioVendaDetalheBeans.dt_venda}">
+				    			</h:outputText>
+				    		</td>
+				    	</tr>
+				    	<tr>
+				    		<td>Data da Quitação: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.dt_pag_total}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td>Sub-total: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}"/></td>
+				    	</tr>
+				    	<h:panelGroup rendered="#{RelatorioVendaDetalheBeans.editavel}">
+				    	<tr>
+				    		<td>Desconto: </td>
+				    		<td><h:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td>Valor Recebido: </td>
+				    		<td><h:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td><h:commandButton value="Atualizar" action="#{RelatorioVendaDetalheBeans.update}"/></td>
+				    		<td></td>
+				    	</tr>
+				    	</h:panelGroup>
+				    	<h:panelGroup rendered="#{!RelatorioVendaDetalheBeans.editavel}">
+				    	<tr>
+				    		<td>Desconto: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td>Total: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td><h:commandButton value="Retornar" action="/relatorio/balcao/filtro.xhtml"/></td>
+				    		<td></td>
+				    	</tr>
+				    	</h:panelGroup>
+				    </table>
+				    <h:panelGroup>
+				    	<p:dataTable var="produtos" value="#{RelatorioVendaDetalheBeans.produtos}">
+					        <p:column headerText="Categoria">
+					            <h:outputText value="#{produtos.ds_cat}" />
+					        </p:column>
+					
+					        <p:column headerText="Produto">
+					            <h:outputText value="#{produtos.ds_prod}" />
+					        </p:column>
+					
+					        <p:column headerText="Valor Unitário">
+					            <h:outputText value="#{produtos.preco_prod_vendidoTela}" />
+					        </p:column>
+					        
+					        <p:column headerText="Quantidade">
+					            <h:outputText value="#{produtos.qtd_prod}" />
+					        </p:column>
+					
+					        <p:column headerText="Valor por produto">
+					            <h:outputText value="#{produtos.valor_por_produto}" />
+					        </p:column>
+					    </p:dataTable>
+				    </h:panelGroup>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

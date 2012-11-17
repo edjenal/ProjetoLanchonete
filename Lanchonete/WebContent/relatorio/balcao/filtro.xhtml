@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+	    	<h:form>
+	    	<p:messages/>
+	    	<table>
+	    		<tr>
+	    		<td style="text-align:center"><h:outputText value="Data inicial"/></td>
+	    		<td></td>
+	    		<td style="text-align:center"><h:outputText value="Data Final"/></td>
+	    		<td style="text-align:center"><h:outputText value="Nome do Cliente"/></td>
+	    		</tr>
+	    		<tr>
+	    		<td ><p:calendar value="#{RelatorioVendaFiltroBeans.dt_inicial}" required="true" requiredMessage="Escolha uma data inicial" size="6"/></td>
+	    		<td style="text-align:center">-</td>
+	    		<td ><p:calendar value="#{RelatorioVendaFiltroBeans.dt_final}" required="true" requiredMessage="Escolha uma data final" size="6"/></td>
+	    		<td ><p:inputText value="#{RelatorioVendaFiltroBeans.nm_cli}"/></td>
+	    		</tr>
+	    	</table>
+			<h:commandButton action="#{RelatorioVendaFiltroBeans.filtar}" value="Filtrar"/>
+			<h:panelGroup rendered="#{RelatorioVendaFiltroBeans.tabelaVendas}">
+				<h:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" border="1" var="rs">
+					<f:facet name="header">Vendas</f:facet>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Data da Venda" />
+						</f:facet>
+						<h:outputText value="#{rs.dt_ven}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Data da Quitação" />
+						</f:facet>
+						<h:outputText value="#{rs.dt_pag}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Cliente" />
+						</f:facet>
+						<h:outputText value="#{rs.nm_cliente}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Sub-total" />
+						</f:facet>
+						<h:outputText value="#{rs.valor_total_vendaTela}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Desconto" />
+						</f:facet>
+						<h:outputText value="#{rs.valor_desconto_vendaTela}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Total" style="text-align:center"/>
+						</f:facet>
+						<h:outputText value="#{rs.valor_total_com_descontoTela}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Débito" />
+						</f:facet>
+						<h:outputText value="#{rs.valor_debitoTela}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Funções" />
+						</f:facet>
+						<h:commandButton value="Detalhes" action="/relatorio/balcao/detalhe.xhtml" >
+							<f:param value="#{rs.id_venda}" name="id_venda" />
+							<f:param value="#{rs.id_cli}" name="id_cli" />
+							<f:param value="#{rs.dt_venda}" name="dt_venda" />
+							<f:param value="#{rs.dt_pag_total}" name="dt_pag_total" />
+							<f:param value="#{rs.nm_cliente}" name="nm_cliente" />
+							<f:param value="#{rs.id_venda}" name="id_venda" />
+							<f:param value="#{rs.valor_total_vendaTela}" name="valor_total_venda" />
+							<f:param value="#{rs.valor_desconto_vendaTela}" name="valor_desconto_vendaTela" />
+							<f:param value="#{rs.valor_total_com_descontoTela}" name="valor_total_com_descontoTela" />
+							<f:param value="#{rs.valor_debitoTela}" name="valor_debitoTela" />
+						</h:commandButton>
+					</h:column>
+				</h:dataTable >
+				<h:outputText value="Valor Arrecadado neste periodo: "/>
+				<h:outputText value="#{RelatorioVendaFiltroBeans.total_arecadado}"/><br/>
+				<h:outputText value="Valor de Débitos neste periodo: "/>
+				<h:outputText value="#{RelatorioVendaFiltroBeans.total_debito}"/><br/>
+			</h:panelGroup>
+	    	</h:form>
+	    </f:view>
+	</ui:define>
+</ui:composition>
+</html>

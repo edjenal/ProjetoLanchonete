@@ -71,4 +71,17 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<!-- Fim Venda -->
+	
+	<!-- Relatorio Balcao -->
+	<managed-bean>
+		<managed-bean-name>RelatorioVendaFiltroBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.relatorio.RelatorioVendaFiltroBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>RelatorioVendaDetalheBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.relatorio.RelatorioVendaDetalheBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Relatorio Balcao-->
 </faces-config>
