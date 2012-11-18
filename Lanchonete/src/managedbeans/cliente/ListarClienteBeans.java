@@ -56,7 +56,8 @@ public class ListarClienteBeans {
 	public String buscar(){
 		ClienteBO clienteBO = new ClienteBO();
 		clienteTOs = clienteBO.findByNm_cli(nome);
-		mostrarTabela = true;
+		System.out.println(clienteTOs);
+		mostrarTabela = !clienteTOs.isEmpty() ? true : false;
 		return "/cliente/listar.xhtml";
 	}
 	

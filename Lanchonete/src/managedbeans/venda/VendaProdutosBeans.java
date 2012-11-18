@@ -246,25 +246,33 @@ public class VendaProdutosBeans {
 	}
 	
 	public String confirmar(){
+		String retorno = "";
 		id_cli = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_cli"));
 		desconto = desconto.replaceAll("\\.", "").replaceAll(",", ".");
 		recebido = recebido.replaceAll("\\.", "").replaceAll(",", ".");
-		Double desc = desconto == null || desconto.equals("") ? 0.0 : Double.parseDouble(desconto);
-		Double rece = recebido==null || recebido.equals("") ? 0.0 : Double.parseDouble(recebido);
+		Double desc = desconto != null && !desconto.equals("") ? Double.parseDouble(desconto) : 0.0 ;
+		Double rece = recebido != null && !recebido.equals("") ? Double.parseDouble(recebido) : 0.0 ;
 		Double debito = total - (rece + desc);
-		java.util.Date data = new java.util.Date();
-		Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
-		VendaBO vendaBO = new VendaBO();
-		//retorno é o id_venda casatrada
-		Integer id_venda = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
-		//inserindo na tabela venda_produto
-		//id_prod, id_venda, qtd_prod, preco_prod_vendido
-		for(int i = 0; i<produtosSelecionados.size(); i++){
-			VendaProdutoBO vendaProdutoBO = new VendaProdutoBO();
-			vendaProdutoBO.insert(produtosSelecionados.get(i).getId_prod(), id_venda, produtosSelecionados.get(i).getQtd_venda(), produtosSelecionados.get(i).getPreco_prod());
+		if(debito>=0){
+			java.util.Date data = new java.util.Date();
+			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
+			VendaBO vendaBO = new VendaBO();
+			//retorno é o id_venda casatrada
+			Integer id_venda = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
+			//inserindo na tabela venda_produto
+			for(int i = 0; i<produtosSelecionados.size(); i++){
+				VendaProdutoBO vendaProdutoBO = new VendaProdutoBO();
+				vendaProdutoBO.insert(produtosSelecionados.get(i).getId_prod(), id_venda, produtosSelecionados.get(i).getQtd_venda(), produtosSelecionados.get(i).getPreco_prod());
+			}
+			cleanBeans();
+			retorno = "/venda/sucesso.xhtml";
+		} else {
+			desconto = desconto.replaceAll("\\.", ",");
+			recebido = recebido.replaceAll("\\.", ",");
+			retorno = "/venda/produtos.xhtml";
 		}
-		cleanBeans();
-		return "/venda/sucesso.xhtml";
+		return retorno;
+		
 	}
 	
 }

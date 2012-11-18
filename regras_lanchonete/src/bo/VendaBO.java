@@ -20,7 +20,7 @@ public class VendaBO {
 	
 	private String SQL_findTop = "select top 1 * from tb_venda order by id_venda desc";
 	
-	private String SQL_filtro = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where nm_cliente like ? and dt_venda >= ? and dt_venda <= ?";
+	
 	
 	private String SQL_findByPrimaryKey = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where id_venda = ?";
 	
@@ -66,19 +66,40 @@ public class VendaBO {
 		}
 		return id;
 	}
-	
-	public List<VendaTO> findByFiltro(Date inicial, Date fim, String nm_cli){
+	private String SQL_filtro = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, " +
+									"dt_venda, dt_pag_total, nm_cliente from tb_venda ven " +
+									"inner join tb_cliente cli on cli.id_cli = ven.id_cli " +
+									"where nm_cliente like ? ";
+	public List<VendaTO> findByFiltro(Date inicial, Date fim, String nm_cli, int situacao){
+		switch (situacao) {
+		case 2:
+			SQL_filtro+="and dt_pag_total is null ";
+			break;
+		case 3:
+			SQL_filtro+="and dt_pag_total is not null ";
+		default:
+			break;
+		}
+		boolean filtarPorData = false;
+		String dt_fim = "";
+		if(inicial!=null && fim!=null){
+			dt_fim = fim.toString() + " 23:59:59";//se nao ia ficar 00:00:00 e nao pegaria ate a ultima hora do dia escolhindo
+			filtarPorData = true;
+			SQL_filtro += "and dt_venda >= ? and dt_venda <= ? ";
+		}
 		nm_cli = nm_cli!=null && !nm_cli.equals("") ? nm_cli+"%" : "%" ;
-		String dt_fim = fim.toString() + " 23:59:59";//se nao ia ficar 00:00:00 e nao pegaria ate a ultima hora do dia escolhindo
 		List<VendaTO> resultado = new ArrayList<VendaTO>();
 		Connection con = Conexao.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
+			SQL_filtro+="order by dt_venda desc";
 			st = con.prepareStatement(SQL_filtro);
 			st.setString(1, nm_cli);
-			st.setDate(2, inicial);
-			st.setString(3, dt_fim);
+			if(filtarPorData){
+				st.setDate(2, inicial);
+				st.setString(3, dt_fim);
+			}
 			rs = st.executeQuery();
 			while (rs.next()) {
 				VendaTO vendaTO = new VendaTO();

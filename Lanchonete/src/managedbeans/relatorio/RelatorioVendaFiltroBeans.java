@@ -18,6 +18,8 @@ public class RelatorioVendaFiltroBeans {
 	
 	private String total_arecadado;
 	private String total_debito;
+	
+	private int situacao;
 
 	public Date getDt_inicial() {
 		return dt_inicial;
@@ -73,11 +75,19 @@ public class RelatorioVendaFiltroBeans {
 		this.total_debito = total_debito;
 	}
 
+	public int getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(int situacao) {
+		this.situacao = situacao;
+	}
+
 	public String filtar(){
-		java.sql.Date inicio = new java.sql.Date(dt_inicial.getTime());
-		java.sql.Date fim = new java.sql.Date(dt_final.getTime());
+		java.sql.Date inicio = dt_inicial!=null ? new java.sql.Date(dt_inicial.getTime()) : null;
+		java.sql.Date fim = dt_final!=null ? new java.sql.Date(dt_final.getTime()) : null;
 		VendaBO vendaBO = new VendaBO();
-		vendas = vendaBO.findByFiltro(inicio, fim, nm_cli);
+		vendas = vendaBO.findByFiltro(inicio, fim, nm_cli, situacao);
 		if(!vendas.isEmpty()){
 			tabelaVendas = true;
 			Double valorT = 0.0;
@@ -86,8 +96,10 @@ public class RelatorioVendaFiltroBeans {
 				valorT += vendas.get(i).getValor_total_venda() - (vendas.get(i).getValor_desconto_venda() + vendas.get(i).getValor_debito());
 				total_arecadado = valorT.toString().replaceAll("\\.", ",");
 				valorD += vendas.get(i).getValor_debito();
-				total_debito = valorD.toString().replaceAll("\\,", ".");
+				total_debito = valorD.toString().replaceAll("\\.", ",");
 			}
+		} else {
+			tabelaVendas = false;
 		}
 		return "/relatorio/balcao/filtro.xhtml";
 	}

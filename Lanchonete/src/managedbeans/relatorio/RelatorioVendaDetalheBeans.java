@@ -143,6 +143,7 @@ public class RelatorioVendaDetalheBeans {
 	
 	//funções xD
 	public String update(){
+		String retorno = "";
 		valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", "").replaceAll(",", ".");
 		Double valor_desconto_venda = valor_desconto_tela == null || valor_desconto_tela.equals("") ? 0.0 : Double.parseDouble(valor_desconto_tela);
 		
@@ -150,12 +151,19 @@ public class RelatorioVendaDetalheBeans {
 		Double rece = recebido==null || recebido.equals("") ? 0.0 : Double.parseDouble(recebido);
 		
 		Double debito = valor_total_venda - (rece + valor_desconto_venda);
+		if(debito>=0){
+			java.util.Date data = new java.util.Date();
+			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
+			VendaBO vendaBO = new VendaBO();
+			cleanBeans();
+			retorno = !vendaBO.update(debito, valor_desconto_venda, dt_pag_total, id_venda) ? "/relatorio/balcao/filtro.xhtml" : null;
+		} else {
+			valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", ",");
+			recebido = recebido.replaceAll("\\.", ",");
+			retorno = "/relatorio/balcao/detalhe.xhtml";
+		}
+		return retorno;
 		
-		java.util.Date data = new java.util.Date();
-		Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
-		VendaBO vendaBO = new VendaBO();
-		cleanBeans();
-		return !vendaBO.update(debito, valor_desconto_venda, dt_pag_total, id_venda) ? "/relatorio/balcao/filtro.xhtml" : null;
 	}
 	
 	private void cleanBeans(){

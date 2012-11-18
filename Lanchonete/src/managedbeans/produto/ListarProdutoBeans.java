@@ -69,12 +69,7 @@ public class ListarProdutoBeans {
 	public String buscar(){
 		ProdutoBO produtoBO = new ProdutoBO();
 		produtoTOs = produtoBO.findByDs_prod(nome, id_cat);
-		if(produtoTOs!=null){
-			mostrarTabela = true;
-		}
-		else {
-			mostrarTabela = false;
-		}
+		mostrarTabela = !produtoTOs.isEmpty() ? true : false;
 		return "/produto/listar.xhtml";
 	}
 	
