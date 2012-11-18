@@ -36,63 +36,38 @@
 	    	</table>
 			<h:commandButton action="#{RelatorioVendaFiltroBeans.filtar}" value="Filtrar"/>
 			<h:panelGroup rendered="#{RelatorioVendaFiltroBeans.tabelaVendas}">
-				<h:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" border="1" var="rs">
-					<f:facet name="header">Vendas</f:facet>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Data da Venda" />
-						</f:facet>
-						<h:outputText value="#{rs.dt_ven}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Data da Quitação" />
-						</f:facet>
-						<h:outputText value="#{rs.dt_pag}" />
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Cliente" />
-						</f:facet>
-						<h:outputText value="#{rs.nm_cliente}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Sub-total" />
-						</f:facet>
-						<h:outputText value="#{rs.valor_total_vendaTela}" />
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Desconto" />
-						</f:facet>
-						<h:outputText value="#{rs.valor_desconto_vendaTela}" />
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Total" style="text-align:center"/>
-						</f:facet>
-						<h:outputText value="#{rs.valor_total_com_descontoTela}" />
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Débito" />
-						</f:facet>
-						<h:outputText value="#{rs.valor_debitoTela}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Funções" />
-						</f:facet>
-						<h:commandButton value="Detalhes" action="/relatorio/balcao/detalhe.xhtml" >
+				<p:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" var="rs">
+			        <f:facet name="header">Vendas</f:facet>
+			        <p:column headerText="Dt. Venda" style="width:12.5%">
+			            <h:outputText value="#{rs.dt_ven}" />
+			        </p:column>
+			
+			        <p:column headerText="Dt. Quitação" style="width:12.5%">
+			            <h:outputText value="#{rs.dt_pag}" />
+			        </p:column>
+			
+			        <p:column headerText="Cliente" style="width:45%">
+			            <h:outputText value="#{rs.nm_cliente}" />
+			        </p:column>
+			
+			        <p:column headerText="Sub-total">
+			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_total_vendaTela}" />
+			        </p:column>
+			        
+			        <p:column headerText="Desconto">
+			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_desconto_vendaTela}" />
+			        </p:column>
+			        
+			        <p:column headerText="Total" style="width:12.5%">
+			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_total_com_descontoTela}" />
+			        </p:column>
+			        
+			         <p:column headerText="Débito">
+			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_debitoTela}" />
+			        </p:column>
+			        
+			        <p:column headerText="Funções">
+			            <h:commandButton value="Detalhes" action="/relatorio/balcao/detalhe.xhtml" >
 							<f:param value="#{rs.id_venda}" name="id_venda" />
 							<f:param value="#{rs.id_cli}" name="id_cli" />
 							<f:param value="#{rs.dt_venda}" name="dt_venda" />
@@ -104,12 +79,19 @@
 							<f:param value="#{rs.valor_total_com_descontoTela}" name="valor_total_com_descontoTela" />
 							<f:param value="#{rs.valor_debitoTela}" name="valor_debitoTela" />
 						</h:commandButton>
-					</h:column>
-				</h:dataTable >
-				<h:outputText value="Valor Arrecadado neste periodo: "/>
-				<h:outputText value="#{RelatorioVendaFiltroBeans.total_arecadado}"/><br/>
-				<h:outputText value="Valor de Débitos neste periodo: "/>
-				<h:outputText value="#{RelatorioVendaFiltroBeans.total_debito}"/><br/>
+			        </p:column>
+			        
+			        <f:facet name="footer">
+			        	<h:outputText value="Valor Arrecadado neste periodo: "/>
+					    <h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaFiltroBeans.total_arecadado}"/>
+					    <br/>
+					    <h:outputText value="Valor de Débitos neste periodo: "/>
+					    <h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaFiltroBeans.total_debito}"/>
+					    <br/>
+			        </f:facet>
+			
+			    </p:dataTable>
+			    
 			</h:panelGroup>
 	    	</h:form>
 	    </f:view>

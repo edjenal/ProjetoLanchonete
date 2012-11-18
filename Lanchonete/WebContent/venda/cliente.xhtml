@@ -4,7 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
 
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
@@ -16,39 +18,30 @@
 			<h:inputText value="#{VendaClienteBeans.nome}"/>
 			<h:commandButton value="Buscar" action="#{VendaClienteBeans.buscar}"/>
 			<h:panelGroup rendered="#{VendaClienteBeans.mostrarTabela}">
-				<h:dataTable value="#{VendaClienteBeans.clienteTOs}" border="1" var="rs">
-					<f:facet name="header">Clientes</f:facet>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Nome" />
-						</f:facet>
-						<h:outputText value="#{rs.nm_cli}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="CPF" />
-						</f:facet>
-						<h:outputText value="#{rs.cpf_cli}" />
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Telefone" />
-						</f:facet>
-						<h:outputText value="#{rs.tel_cli}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="" />
-						</f:facet>
-						<h:commandButton value="Confirma" action="/venda/produtos.xhtml" actionListener="#{VendaClienteBeans.ocultar}">
+			<br/>
+				<p:dataTable value="#{VendaClienteBeans.clienteTOs}" var="rs">
+					<f:facet name="header">
+			            Lista de Clientes
+			        </f:facet>
+			        <p:column headerText="Nome" style="width:40%">
+			            <h:outputText value="#{rs.nm_cli}" />
+			        </p:column>
+			
+			        <p:column headerText="CPF">
+			            <h:outputText value="#{rs.cpf_cli}" />
+			        </p:column>
+			
+			        <p:column headerText="Telefone">
+			            <h:outputText value="#{rs.tel_cli}" />
+			        </p:column>
+			
+			        <p:column headerText="Selecione">
+			            <h:commandButton value="Confirma" action="/venda/produtos.xhtml" actionListener="#{VendaClienteBeans.ocultar}">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
 							<f:param value="#{rs.nm_cli}" name="nm_cli" />
 						</h:commandButton>
-					</h:column>
-				</h:dataTable >
+			        </p:column>
+			    </p:dataTable>
 			</h:panelGroup>
 		</h:form>
 	</f:view>

@@ -4,7 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
 
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
@@ -30,35 +32,25 @@
 					<h:inputText value="#{VendaProdutosBeans.qtd_venda}" onblur="submit()"/>
 					<br/>
 					<h:panelGroup id="listaProdutos" rendered="#{VendaProdutosBeans.mostrarTabela}">
-						<h:dataTable value="#{VendaProdutosBeans.produtoTOs}" border="1"
-							var="rs">
-							<f:facet name="header">Produtos</f:facet>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Categoria" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_cat}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Descrição" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_prod}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Valor" />
-								</f:facet>
-								<h:outputText value="#{rs.preco_prod_tela}" />
-							</h:column>
-							
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Funções" />
-								</f:facet>
-								<h:commandButton value="Escolher" action="#{VendaProdutosBeans.addProduto}">
+					<br/>
+						<p:dataTable value="#{VendaProdutosBeans.produtoTOs}" var="rs">
+							<f:facet name="header">
+					            Lista de Produtos
+					        </f:facet>
+					        <p:column headerText="Categoria">
+					            <h:outputText value="#{rs.ds_cat}" style="width:30%"/>
+					        </p:column>
+					
+					        <p:column headerText="Descrição" style="width:45%">
+					            <h:outputText value="#{rs.ds_prod}" />
+					        </p:column>
+					
+					        <p:column headerText="Valor">
+					            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+					        </p:column>
+					
+					        <p:column headerText="Selecione">
+					           <h:commandButton value="Escolher" action="#{VendaProdutosBeans.addProduto}">
 									<f:param value="#{rs.id_prod}" name="id_prod" />
 									<f:param value="#{rs.ds_prod}" name="ds_prod" />
 									<f:param value="#{rs.id_cat}" name="id_cat" />
@@ -66,101 +58,88 @@
 									<f:param value="#{rs.preco_prod}" name="preco_prod" />
 									<f:param value="#{VendaProdutosBeans.qtd_venda}" name="qtd_venda" />
 								</h:commandButton>
-							</h:column>
-						</h:dataTable>
+					        </p:column>
+					    </p:dataTable>
 					</h:panelGroup>
 					<h:panelGroup id="carrinho" rendered="#{VendaProdutosBeans.mostrarTabelaCompras}">
-						<h:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" border="1"
-							var="rs">
-							<f:facet name="header">Produtos Selecionados</f:facet>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Categoria" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_cat}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Descrição" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_prod}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Valor" />
-								</f:facet>
-								<h:outputText value="#{rs.preco_prod_tela}" />
-							</h:column>
-							
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Quantidade" />
-								</f:facet>
-								<h:outputText value="#{rs.qtd_venda}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Funções" />
-								</f:facet>
-								<h:commandButton value="Remover" action="#{VendaProdutosBeans.removerProduto}">
+					<br/>
+						<p:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" var="rs">
+							<f:facet name="header">
+					            Carrinho de Compra(s)
+					        </f:facet>
+					        <p:column headerText="Categoria" style="width:20%">
+					            <h:outputText value="#{rs.ds_cat}" />
+					        </p:column>
+					
+					        <p:column headerText="Descrição">
+					            <h:outputText value="#{rs.ds_prod}" />
+					        </p:column>
+					
+					        <p:column headerText="Valor" style="width:15%">
+					            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+					        </p:column>
+					
+					        <p:column headerText="Quant." style="width:15%">
+					            <h:outputText value="#{rs.qtd_venda}" />
+					        </p:column>
+					        
+					        <p:column headerText="Excluir ?" style="width:20%">
+					            <h:commandButton value="Sim" action="#{VendaProdutosBeans.removerProduto}">
 									<f:param value="#{rs}" name="produto" />
 								</h:commandButton>
-							</h:column>
-						</h:dataTable>
+					        </p:column>
+					    </p:dataTable>
 						<h:commandButton value="Concluir" action="#{VendaProdutosBeans.concluir}"/>
+						<br/>
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{VendaProdutosBeans.mostrarFinalizado}">
-					<h:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" border="1"
-							var="rs">
-							<f:facet name="header">Produtos Escolhidos</f:facet>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Categoria" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_cat}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Descrição" />
-								</f:facet>
-								<h:outputText value="#{rs.ds_prod}" />
-							</h:column>
-	
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Valor Unitário" />
-								</f:facet>
-								<h:outputText value="#{rs.preco_prod_tela}" />
-							</h:column>
-							
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Quantidade" />
-								</f:facet>
-								<h:outputText value="#{rs.qtd_venda}" />
-							</h:column>
-						</h:dataTable>
-						<h:outputText value="Total da Venda: R$"/>
-						<h:outputText value="#{VendaProdutosBeans.totalTela}"/>
-						<br/>
-						<h:outputText value="Valor do Desconto: R$"/>
-						<h:inputText value="#{VendaProdutosBeans.desconto}"/>
-						<br/>
-						<h:outputText value="Valor Recebido: R$"/>
-						<h:inputText value="#{VendaProdutosBeans.recebido}"/>
-						<br/>
-						<h:outputText value="Caso queira inserir mais itens >>"/>
-						<h:commandButton action="#{VendaProdutosBeans.retornarCompra}" value="Retornar compra"/>
-						<br/>
-						<h:commandButton action="#{VendaProdutosBeans.confirmar}" value="Confirmar Venda">
-							<f:param value="#{VendaProdutosBeans.id_cli}" name="id_cli" />
-						</h:commandButton>
-						<br/>
+					<br/>
+					<p:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" var="rs">
+				        <f:facet name="header">
+				            Carrinho de Compra(s)
+				        </f:facet>
+					    <p:column headerText="Categoria" style="width:20%">
+				            <h:outputText value="#{rs.ds_cat}" />
+				        </p:column>
+				
+				        <p:column headerText="Descrição" style="width:40%">
+				            <h:outputText value="#{rs.ds_prod}" />
+				        </p:column>
+				
+				        <p:column headerText="Valor Unitário" style="width:25%">
+				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+				        </p:column>
+				
+				        <p:column headerText="Quant." style="width:25%">
+				            <h:outputText value="#{rs.qtd_venda}" />
+				        </p:column>
+				    </p:dataTable>
+				    <table>
+				    	<tr>
+				    		<td><h:outputText value="Total da Venda"/></td>
+				    		<td><h:outputText value="R$ "/><h:outputText value="#{VendaProdutosBeans.totalTela}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td><h:outputText value="Valor do Desconto "/></td>
+				    		<td><h:outputText value="R$ "/><h:inputText value="#{VendaProdutosBeans.desconto}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td><h:outputText value="Valor Recebido"/></td>
+				    		<td><h:outputText value="R$ "/><h:inputText value="#{VendaProdutosBeans.recebido}"/></td>
+				    	</tr>
+				    </table>
+					<br/>
+					
+					<h:outputText value="Quer inserir mais itens"/>
+					<h:commandButton action="#{VendaProdutosBeans.retornarCompra}" value="Clique aqui"/>
+					<br/>
+					
+					<h:commandButton action="#{VendaProdutosBeans.confirmar}" value="Confirmar Venda">
+						<f:param value="#{VendaProdutosBeans.id_cli}" name="id_cli" />
+					</h:commandButton>
+					<br/>
+					
 				</h:panelGroup>
 				<h:commandButton value="Cancelar" action="#{VendaProdutosBeans.cancelar}"/>
 		</h:form>

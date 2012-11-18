@@ -4,29 +4,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
 
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
 		<f:view>
 			<h:form>
 				<h:commandButton value="Novo" action="/categoria/nova.xhtml"/>
-				<h:dataTable value="#{ListarCategoriaBeans.categoriaTO}" border="1"
-					var="rs">
-					<f:facet name="header">Lista de Categorias</f:facet>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Descrição" />
-						</f:facet>
-						<h:outputText value="#{rs.ds_cat}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Funções" />
-						</f:facet>
-						<h:commandButton value="Editar" action="/categoria/editar.xhtml">
+				<br/>
+				<p:dataTable value="#{ListarCategoriaBeans.categoriaTO}" var="rs" style="width:50%">
+					<f:facet name="header">
+			            Lista de Categorias
+			        </f:facet>
+			        <p:column headerText="Descrição">
+			            <h:outputText value="#{rs.ds_cat}" />
+			        </p:column>
+			
+			        <p:column headerText="Funções" style="width:40%">
+			            <h:commandButton value="Editar" action="/categoria/editar.xhtml">
 							<f:param value="#{rs.id_cat}" name="id_cat" />
 						</h:commandButton>
 						<h:commandButton value="Deletar"
@@ -34,8 +31,9 @@
 							onclick="if (!confirm('Quer realmente deletar essa Categoria?')) return false">
 							<f:param value="#{rs.id_cat}" name="id_cat" />
 						</h:commandButton>
-					</h:column>
-				</h:dataTable>
+			        </p:column>
+			    </p:dataTable>
+				
 			</h:form>
 		</f:view>
 	</ui:define>

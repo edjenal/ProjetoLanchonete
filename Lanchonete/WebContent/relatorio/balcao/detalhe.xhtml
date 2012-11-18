@@ -37,16 +37,16 @@
 				    	</tr>
 				    	<tr>
 				    		<td>Sub-total: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}"/></td>
+				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}"/></td>
 				    	</tr>
 				    	<h:panelGroup rendered="#{RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
 				    		<td>Desconto: </td>
-				    		<td><h:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    		<td><h:outputText value="R$ "/><h:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td>Valor Recebido: </td>
-				    		<td><h:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
+				    		<td><h:outputText value="R$ "/><h:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td><h:commandButton value="Atualizar" action="#{RelatorioVendaDetalheBeans.update}"/></td>
@@ -56,11 +56,11 @@
 				    	<h:panelGroup rendered="#{!RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
 				    		<td>Desconto: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td>Total: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>
+				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td><h:commandButton value="Retornar" action="/relatorio/balcao/filtro.xhtml"/></td>
@@ -70,6 +70,9 @@
 				    </table>
 				    <h:panelGroup>
 				    	<p:dataTable var="produtos" value="#{RelatorioVendaDetalheBeans.produtos}">
+					    	<f:facet name="header">
+					            Produtos Desta Compra
+					        </f:facet>
 					        <p:column headerText="Categoria">
 					            <h:outputText value="#{produtos.ds_cat}" />
 					        </p:column>
@@ -79,15 +82,15 @@
 					        </p:column>
 					
 					        <p:column headerText="Valor Unitário">
-					            <h:outputText value="#{produtos.preco_prod_vendidoTela}" />
+					            <h:outputText value="R$ "/><h:outputText value="#{produtos.preco_prod_vendidoTela}" />
 					        </p:column>
 					        
 					        <p:column headerText="Quantidade">
 					            <h:outputText value="#{produtos.qtd_prod}" />
 					        </p:column>
 					
-					        <p:column headerText="Valor por produto">
-					            <h:outputText value="#{produtos.valor_por_produto}" />
+					        <p:column headerText="Valor total por produto">
+					            <h:outputText value="R$ "/><h:outputText value="#{produtos.valor_por_produto}" />
 					        </p:column>
 					    </p:dataTable>
 				    </h:panelGroup>

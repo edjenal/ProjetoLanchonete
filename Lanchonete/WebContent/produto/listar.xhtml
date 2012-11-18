@@ -4,8 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
 		<f:view>
@@ -24,36 +25,25 @@
 				<h:commandButton value="Buscar"
 					action="#{ListarProdutoBeans.buscar}" />
 				<h:panelGroup rendered="#{ListarProdutoBeans.mostrarTabela}">
-					<h:dataTable value="#{ListarProdutoBeans.produtoTOs}" border="1"
-						var="rs">
-						<f:facet name="header">Lista de Produtos</f:facet>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Categoria" />
-							</f:facet>
-							<h:outputText value="#{rs.ds_cat}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Descrição" />
-							</f:facet>
-							<h:outputText value="#{rs.ds_prod}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Valor" />
-							</f:facet>
-							<h:outputText value="#{rs.preco_prod_tela}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Funções" />
-							</f:facet>
-							<h:commandButton value="Editar" action="/produto/editar.xhtml"
+				<br/>
+					<p:dataTable value="#{ListarProdutoBeans.produtoTOs}" var="rs">
+						<f:facet name="header">
+				            Lista de Produtos
+				        </f:facet>
+				        <p:column headerText="Categoria">
+				            <h:outputText value="#{rs.ds_cat}" style="width:25%"/>
+				        </p:column>
+				
+				        <p:column headerText="Descrição" style="width:40%">
+				            <h:outputText value="#{rs.ds_prod}" />
+				        </p:column>
+				
+				        <p:column headerText="Valor">
+				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+				        </p:column>
+				
+				        <p:column headerText="Funções">
+				           <h:commandButton value="Editar" action="/produto/editar.xhtml"
 								actionListener="#{ListarProdutoBeans.ocultar}">
 								<f:param value="#{rs.id_prod}" name="id_prod" />
 							</h:commandButton>
@@ -61,8 +51,8 @@
 								onclick="if (!confirm('Quer realmente deletar esse Produto?')) return false">
 								<f:param value="#{rs.id_prod}" name="id_prod" />
 							</h:commandButton>
-						</h:column>
-					</h:dataTable>
+				        </p:column>
+				    </p:dataTable>
 				</h:panelGroup>
 		</h:form>
 		</f:view>
