@@ -12,11 +12,11 @@
 	<ui:define name="content">
 	<f:view>
 		<h:form>
-			<h:commandButton value="Novo" action="/cliente/novo.xhtml" actionListener="#{ListarClienteBeans.ocultar}"/>
+			<p:commandButton value="Novo" action="/cliente/novo.xhtml" actionListener="#{ListarClienteBeans.ocultar}" ajax="false"/>
 			<br/>
-			<h:outputText value="Nome: "/>
-			<h:inputText value="#{ListarClienteBeans.nome}"/>
-			<h:commandButton value="Buscar" action="#{ListarClienteBeans.buscar}"/>
+			<h:outputText value="Nome: " style="font-size:24px"/>
+			<p:inputText value="#{ListarClienteBeans.nome}" />
+			<p:commandButton value="Buscar" action="#{ListarClienteBeans.buscar}" ajax="false"/>
 			<br/>
 			<h:panelGroup rendered="#{ListarClienteBeans.mostrarTabela}">
 				<p:dataTable value="#{ListarClienteBeans.clienteTOs}" var="rs">
@@ -36,14 +36,14 @@
 			        </p:column>
 			
 			        <p:column headerText="Funções">
-			            <h:commandButton value="Editar" action="/cliente/editar.xhtml" actionListener="#{ListarClienteBeans.ocultar}">
+			            <p:commandButton value="Editar" action="/cliente/editar.xhtml" actionListener="#{ListarClienteBeans.ocultar}" ajax="false">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
-						</h:commandButton>
-						<h:commandButton value="Deletar"
+						</p:commandButton>
+						<p:commandButton value="Deletar"
 							action="#{ListarClienteBeans.deletar}"
-							onclick="if (!confirm('Quer realmente deletar esse Cliente?')) return false">
+							onclick="if (!confirm('Quer realmente deletar esse Cliente?')) return false" ajax="false">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
-						</h:commandButton>
+						</p:commandButton>
 			        </p:column>
 			    </p:dataTable>
 			</h:panelGroup>

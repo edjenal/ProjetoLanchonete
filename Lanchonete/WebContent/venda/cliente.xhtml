@@ -12,30 +12,35 @@
 	<ui:define name="content">
 	    <f:view>
 		<h:form>
-			<h:outputText value="Escolha do Cliente"/>
-			<br/>
-			<h:outputText value="Nome do Cliente: "/>
-			<h:inputText value="#{VendaClienteBeans.nome}"/>
-			<h:commandButton value="Buscar" action="#{VendaClienteBeans.buscar}"/>
+			<table>
+				<tr>
+					<td colspan="3" style="text-aling:center"><h:outputText value="Escolha um Cliente para realizar a venda" style="font-size:24px"/></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Nome: " style="font-size:24px"/></td>
+					<td><p:inputText value="#{VendaClienteBeans.nome}"/></td>
+					<td><p:commandButton value="Buscar" action="#{VendaClienteBeans.buscar}" ajax="false"/></td>
+				</tr>
+			</table>
 			<h:panelGroup rendered="#{VendaClienteBeans.mostrarTabela}">
 			<br/>
 				<p:dataTable value="#{VendaClienteBeans.clienteTOs}" var="rs">
 					<f:facet name="header">
-			            Lista de Clientes
+			            Clientes
 			        </f:facet>
-			        <p:column headerText="Nome" style="width:40%">
+			        <p:column headerText="Nome" >
 			            <h:outputText value="#{rs.nm_cli}" />
 			        </p:column>
 			
-			        <p:column headerText="CPF">
+			        <p:column headerText="CPF" style="width:12%; text-align:center">
 			            <h:outputText value="#{rs.cpf_cli}" />
 			        </p:column>
 			
-			        <p:column headerText="Telefone">
+			        <p:column headerText="Telefone" style="width:12%; text-align:center">
 			            <h:outputText value="#{rs.tel_cli}" />
 			        </p:column>
 			
-			        <p:column headerText="Selecione">
+			        <p:column headerText="Selecione" style="width:5%; text-align:center">
 			            <h:commandButton value="Confirma" action="/venda/produtos.xhtml" actionListener="#{VendaClienteBeans.ocultar}">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
 							<f:param value="#{rs.nm_cli}" name="nm_cli" />

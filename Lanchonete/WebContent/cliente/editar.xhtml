@@ -16,28 +16,28 @@
 			<p:messages/>
 				<table>
 					<tr>
-						<th colspan="2"> Editar Cliente </th>
+						<th colspan="2" style="font-size:24px"> Editar Cliente </th>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Nome:" for="nome"/></td>
+						<td><h:outputLabel value="Nome:" for="nome" style="font-size:24px"/></td>
 						<td><p:inputText id="nome" value="#{EditarClienteBeans.nm_cli}" required="true" requiredMessage="Nome é obrigatório"/></td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="CPF:" for="cpf"/></td>
+						<td><h:outputLabel value="CPF:" for="cpf" style="font-size:24px"/></td>
 						<td><p:inputMask id="cpf" value="#{EditarClienteBeans.cpf_cli}" mask="999.999.999-99" size="14"/></td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Telefone:" for="telefone"/></td>
+						<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
 						<td><p:inputMask id="telefone" value="#{EditarClienteBeans.tel_cli}" mask="(99)9999-9999" size="13"/></td>
 					</tr>
 				</table>
-				<h:commandButton 
+				<p:commandButton 
 		  			value="Confirmar" 
-		  			action="#{EditarClienteBeans.update}"/>
-	  			<h:commandButton 
+		  			action="#{EditarClienteBeans.update}" ajax="false"/>
+	  			<p:commandButton 
 		  			value="Cancelar" 
 		  			action="/cliente/listar.xhtml"
-		  			immediate="true"/>
+		  			immediate="true" ajax="false"/>
 			</h:form>
 		</f:view>
 	</ui:define>

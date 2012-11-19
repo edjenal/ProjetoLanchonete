@@ -15,21 +15,17 @@
 			<p:messages/>
 				<table>
 					<tr>
-						<th> Cadastro de Categoria </th>
+						<th colspan="2" style="font-size:24px"> Cadastro de Categoria </th>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Descrição: " for="ds_cat"/></td>
+						<td><h:outputLabel value="Descrição: " for="ds_cat" style="font-size:24px"/></td>
 						<td><h:inputText id="ds_cat" value="#{NovaCategoriaBeans.ds_cat}" required="true" requiredMessage="Descrição é obrigatório!"/>
 						</td>
 					</tr>
 				</table>
-				<h:commandButton 
-		  			value="Cadastrar" 
-		  			action="#{NovaCategoriaBeans.inserir}"/>
-	  			<h:commandButton 
-		  			value="Cancelar" 
-		  			action="/categoria/listar.xhtml"
-		  			immediate="true"/>
+				<p:commandButton 
+		  			value="Cadastrar" action="#{NovaCategoriaBeans.inserir}" ajax="false"/>
+	  			<p:commandButton value="Cancelar" action="/categoria/listar.xhtml" ajax="false" immediate="true"/>
 			</h:form>
 		</f:view>
 	</ui:define>

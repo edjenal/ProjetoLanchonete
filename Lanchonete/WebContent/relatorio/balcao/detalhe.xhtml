@@ -17,53 +17,56 @@
 				<h:inputHidden value="#{RelatorioVendaDetalheBeans.valor_total_venda}"/>
 				    <table>
 				    	<tr>
-				    		<td>Nº da venda: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.id_venda}"/></td>
+				    		<td style="font-size:24px">Nº da venda: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.id_venda}" style="font-size:24px"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td>Cliente: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.nm_cliente}"/></td>
+				    		<td style="font-size:24px">Cliente: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.nm_cliente}" style="font-size:24px"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td>Data da venda: </td>
+				    		<td style="font-size:24px">Telefone: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.tel_cli}" style="font-size:24px"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td style="font-size:24px">Data da venda: </td>
 				    		<td>
-				    			<h:outputText value="#{RelatorioVendaDetalheBeans.dt_venda}">
-				    			</h:outputText>
+				    			<h:outputText value="#{RelatorioVendaDetalheBeans.dt_venda}" style="font-size:24px"/>
 				    		</td>
 				    	</tr>
 				    	<tr>
-				    		<td>Data da Quitação: </td>
-				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.dt_pag_total}"/></td>
+				    		<td style="font-size:24px">Data da Quitação: </td>
+				    		<td><h:outputText value="#{RelatorioVendaDetalheBeans.dt_pag_total}" style="font-size:24px"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td>Sub-total: </td>
-				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}"/></td>
+				    		<td style="font-size:24px">Sub-total: </td>
+				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}" style="font-size:24px"/></td>
 				    	</tr>
 				    	<h:panelGroup rendered="#{RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
-				    		<td>Desconto: </td>
-				    		<td><h:outputText value="R$ "/><h:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    		<td style="font-size:24px">Desconto: </td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td>Valor Recebido: </td>
-				    		<td><h:outputText value="R$ "/><h:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
+				    		<td style="font-size:24px">Valor Recebido: </td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td><h:commandButton value="Atualizar" action="#{RelatorioVendaDetalheBeans.update}"/></td>
-				    		<td></td>
+				    		<td><p:commandButton value="Atualizar" action="#{RelatorioVendaDetalheBeans.update}" ajax="false"/></td>
+				    		<td><p:commandButton value="Retornar" action="/relatorio/balcao/filtro.xhtml" ajax="false"/></td>
 				    	</tr>
 				    	</h:panelGroup>
 				    	<h:panelGroup rendered="#{!RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
-				    		<td>Desconto: </td>
-				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    		<td style="font-size:24px">Desconto: </td>
+				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td>Total: </td>
-				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>
+				    		<td style="font-size:24px">Total: </td>
+				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>
 				    	</tr>
 				    	<tr>
-				    		<td><h:commandButton value="Retornar" action="/relatorio/balcao/filtro.xhtml"/></td>
+				    		<td><p:commandButton value="Retornar" action="/relatorio/balcao/filtro.xhtml" ajax="false"/></td>
 				    		<td></td>
 				    	</tr>
 				    	</h:panelGroup>

@@ -11,20 +11,28 @@
 	<ui:define name="content">
 		<f:view>
 			<h:form>
-				<!-- ListarProdutoBeans -->
-				<h:commandButton value="Novo" action="/produto/novo.xhtml"
-					actionListener="#{ListarProdutoBeans.ocultar}" />
-				<br/>
-				<h:outputText value="Categoria do produto"/>
-				<h:selectOneMenu id="id_cat" value="#{ListarProdutoBeans.id_cat}"> 
-					<f:selectItems value="#{ListarProdutoBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
-				</h:selectOneMenu>
-				<br/>
-				<h:outputText value="Descrição do produto"/>
-				<h:inputText value="#{ListarProdutoBeans.nome}" />
-				<h:commandButton value="Buscar"
-					action="#{ListarProdutoBeans.buscar}" />
-				<h:panelGroup rendered="#{ListarProdutoBeans.mostrarTabela}">
+			<table>
+				<tr>
+					<td><p:commandButton value="Novo" action="/produto/novo.xhtml"
+					actionListener="#{ListarProdutoBeans.ocultar}" ajax="false"/></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Categoria do produto" style="font-size:24px"/></td>
+					<td><p:selectOneMenu id="id_cat" value="#{ListarProdutoBeans.id_cat}"> 
+							<f:selectItems value="#{ListarProdutoBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
+						</p:selectOneMenu></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Descrição do produto" style="font-size:24px"/></td>
+					<td><p:inputText value="#{ListarProdutoBeans.nome}" /></td>
+					<td><p:commandButton value="Buscar"
+					action="#{ListarProdutoBeans.buscar}" ajax="false"/></td>
+				</tr>
+			</table>
+			<h:panelGroup rendered="#{ListarProdutoBeans.mostrarTabela}">
 				<br/>
 					<p:dataTable value="#{ListarProdutoBeans.produtoTOs}" var="rs">
 						<f:facet name="header">
@@ -34,23 +42,23 @@
 				            <h:outputText value="#{rs.ds_cat}" style="width:25%"/>
 				        </p:column>
 				
-				        <p:column headerText="Descrição" style="width:40%">
+				        <p:column headerText="Descrição" style="width:50%">
 				            <h:outputText value="#{rs.ds_prod}" />
 				        </p:column>
 				
-				        <p:column headerText="Valor">
+				        <p:column headerText="Valor" style="width:0%">
 				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
 				        </p:column>
 				
-				        <p:column headerText="Funções">
-				           <h:commandButton value="Editar" action="/produto/editar.xhtml"
-								actionListener="#{ListarProdutoBeans.ocultar}">
+				        <p:column headerText="Funções" style="width:0%">
+				           <p:commandButton value="Editar" action="/produto/editar.xhtml"
+								actionListener="#{ListarProdutoBeans.ocultar}" ajax="false">
 								<f:param value="#{rs.id_prod}" name="id_prod" />
-							</h:commandButton>
-							<h:commandButton value="Deletar" action="#{ListarProdutoBeans.deletar}"
-								onclick="if (!confirm('Quer realmente deletar esse Produto?')) return false">
+							</p:commandButton>
+							<p:commandButton value="Deletar" action="#{ListarProdutoBeans.deletar}"
+								onclick="if (!confirm('Quer realmente deletar esse Produto?')) return false" ajax="false">
 								<f:param value="#{rs.id_prod}" name="id_prod" />
-							</h:commandButton>
+							</p:commandButton>
 				        </p:column>
 				    </p:dataTable>
 				</h:panelGroup>

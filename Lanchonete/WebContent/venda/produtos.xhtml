@@ -12,27 +12,31 @@
 	<ui:define name="content">
 	    <f:view>
 			<h:form>
+			<table>
+				<tr>
+					<td colspan="2"><h:outputText value="Venda" style="font-size:24px; font-align:center"/></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Cliente: " style="font-size:24px"/></td>
+					<td><h:outputText value="#{VendaProdutosBeans.nm_cli.toUpperCase()}" style="font-size:24px"/></td>
+				</tr>
+			</table>
 				<h:inputHidden value="#{VendaProdutosBeans.id_cli}"/>
-				<br/>
-				<h:outputText value="Cliente "/>
-				<h:outputText value="#{VendaProdutosBeans.nm_cli}"/>
-				<br/>
 				<h:panelGroup rendered="#{!VendaProdutosBeans.mostrarFinalizado}">
-					<h:outputText value="Categoria do produto: "/>
-					<h:selectOneMenu id="id_cat" value="#{VendaProdutosBeans.id_cat}"> 
-						<f:selectItems value="#{VendaProdutosBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
-					</h:selectOneMenu>
-					<br/>
-					<h:outputText value="Descrição do produto"/>
-					<h:inputText value="#{VendaProdutosBeans.nome}" />
-					<h:commandButton value="Buscar"
-						action="#{VendaProdutosBeans.buscar}" />
-					<br/>
-					<h:outputText value="Informe a quantidade do produto e clique em ESCOLHER "/>
-					<h:inputText value="#{VendaProdutosBeans.qtd_venda}" onblur="submit()"/>
-					<br/>
+					<table>
+						<tr>
+							<td><h:outputText value="Categoria" style="font-size:24px"/></td>
+							<td><p:selectOneMenu id="id_cat" value="#{VendaProdutosBeans.id_cat}"> 
+									<f:selectItems value="#{VendaProdutosBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
+								</p:selectOneMenu></td>
+							<td><h:outputText value=" Descrição" style="font-size:24px"/></td>
+							<td><p:inputText value="#{VendaProdutosBeans.nome}" /></td>
+							<td><h:outputText value=" Quantidade" style="font-size:24px"/></td>
+							<td><p:inputText value="#{VendaProdutosBeans.qtd_venda}" onblur="submit()" size="2"/></td>
+							<td><p:commandButton value="Buscar" action="#{VendaProdutosBeans.buscar}" ajax="false" /></td>
+						</tr>
+					</table>
 					<h:panelGroup id="listaProdutos" rendered="#{VendaProdutosBeans.mostrarTabela}">
-					<br/>
 						<p:dataTable value="#{VendaProdutosBeans.produtoTOs}" var="rs">
 							<f:facet name="header">
 					            Lista de Produtos
@@ -41,23 +45,23 @@
 					            <h:outputText value="#{rs.ds_cat}" style="width:30%"/>
 					        </p:column>
 					
-					        <p:column headerText="Descrição" style="width:45%">
+					        <p:column headerText="Descrição" style="width:50%">
 					            <h:outputText value="#{rs.ds_prod}" />
 					        </p:column>
 					
-					        <p:column headerText="Valor">
+					        <p:column headerText="Valor" style="width:10%">
 					            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
 					        </p:column>
 					
-					        <p:column headerText="Selecione">
-					           <h:commandButton value="Escolher" action="#{VendaProdutosBeans.addProduto}">
+					        <p:column headerText="Selecione" style="width:10%">
+					           <p:commandButton value="Escolher" action="#{VendaProdutosBeans.addProduto}" ajax="false">
 									<f:param value="#{rs.id_prod}" name="id_prod" />
 									<f:param value="#{rs.ds_prod}" name="ds_prod" />
 									<f:param value="#{rs.id_cat}" name="id_cat" />
 									<f:param value="#{rs.ds_cat}" name="ds_cat" />
 									<f:param value="#{rs.preco_prod}" name="preco_prod" />
 									<f:param value="#{VendaProdutosBeans.qtd_venda}" name="qtd_venda" />
-								</h:commandButton>
+								</p:commandButton>
 					        </p:column>
 					    </p:dataTable>
 					</h:panelGroup>
@@ -67,34 +71,32 @@
 							<f:facet name="header">
 					            Carrinho de Compra(s)
 					        </f:facet>
-					        <p:column headerText="Categoria" style="width:20%">
+					        <p:column headerText="Categoria" style="width:32%">
 					            <h:outputText value="#{rs.ds_cat}" />
 					        </p:column>
 					
-					        <p:column headerText="Descrição">
+					        <p:column headerText="Descrição" style="width:50%">
 					            <h:outputText value="#{rs.ds_prod}" />
 					        </p:column>
 					
-					        <p:column headerText="Valor" style="width:15%">
+					        <p:column headerText="Valor" style="width:8%">
 					            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
 					        </p:column>
 					
-					        <p:column headerText="Quant." style="width:15%">
+					        <p:column headerText="Quant." style="width:5%; text-align:center">
 					            <h:outputText value="#{rs.qtd_venda}" />
 					        </p:column>
 					        
-					        <p:column headerText="Excluir ?" style="width:20%">
+					        <p:column headerText="Excluir ?" style="width:5%; text-align:center">
 					            <h:commandButton value="Sim" action="#{VendaProdutosBeans.removerProduto}">
 									<f:param value="#{rs}" name="produto" />
 								</h:commandButton>
 					        </p:column>
 					    </p:dataTable>
-						<h:commandButton value="Concluir" action="#{VendaProdutosBeans.concluir}"/>
-						<br/>
+						<p:commandButton value="Concluir" action="#{VendaProdutosBeans.concluir}" ajax="false"/>
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{VendaProdutosBeans.mostrarFinalizado}">
-					<br/>
 					<p:dataTable value="#{VendaProdutosBeans.produtosSelecionados}" var="rs">
 				        <f:facet name="header">
 				            Carrinho de Compra(s)
@@ -122,26 +124,25 @@
 				    	</tr>
 				    	<tr>
 				    		<td><h:outputText value="Valor do Desconto "/></td>
-				    		<td><h:outputText value="R$ "/><h:inputText value="#{VendaProdutosBeans.desconto}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.desconto}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td><h:outputText value="Valor Recebido"/></td>
-				    		<td><h:outputText value="R$ "/><h:inputText value="#{VendaProdutosBeans.recebido}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.recebido}"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td><h:outputText value="Inserir mais itens?"/></td>
+				    		<td><p:commandButton action="#{VendaProdutosBeans.retornarCompra}" value="Clique aqui" ajax="false"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td></td>
+				    		<td><p:commandButton action="#{VendaProdutosBeans.confirmar}" value="Confirmar Venda" ajax="false">
+									<f:param value="#{VendaProdutosBeans.id_cli}" name="id_cli" />
+								</p:commandButton></td>
 				    	</tr>
 				    </table>
-					<br/>
-					
-					<h:outputText value="Quer inserir mais itens"/>
-					<h:commandButton action="#{VendaProdutosBeans.retornarCompra}" value="Clique aqui"/>
-					<br/>
-					
-					<h:commandButton action="#{VendaProdutosBeans.confirmar}" value="Confirmar Venda">
-						<f:param value="#{VendaProdutosBeans.id_cli}" name="id_cli" />
-					</h:commandButton>
-					<br/>
-					
 				</h:panelGroup>
-				<h:commandButton value="Cancelar" action="#{VendaProdutosBeans.cancelar}"/>
+				<p:commandButton value="Cancelar" action="#{VendaProdutosBeans.cancelar}" onclick="if (!confirm('Deseja realmente cancelar essa venda?')) return false" ajax="false"/>
 		</h:form>
 		</f:view>
 	</ui:define>

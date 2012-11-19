@@ -15,29 +15,29 @@
 			<p:messages/>
 				<table>
 					<tr>
-						<th colspan="2"> Cadastro de Cliente </th>
+						<th colspan="2" style="font-size:24px"> Cadastro de Cliente </th>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Nome:" for="nome"/></td>
+						<td><h:outputLabel value="Nome:" for="nome" style="font-size:24px"/></td>
 						<td><p:inputText id="nome" value="#{NovoClienteBeans.nm_cli}" required="true" requiredMessage="Nome é obrigatório"/>
 						</td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="CPF:" for="cpf"/></td>
+						<td><h:outputLabel value="CPF:" for="cpf" style="font-size:24px"/></td>
 						<td><p:inputMask id="cpf" value="#{NovoClienteBeans.cpf_cli}" mask="999.999.999-99" size="14"/></td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Telefone:" for="telefone"/></td>
+						<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
 						<td><p:inputMask id="telefone" value="#{NovoClienteBeans.tel_cli}" mask="(99)9999-9999" size="13"/></td>
 					</tr>
 				</table>
-				<h:commandButton 
+				<p:commandButton 
 		  			value="Cadastrar" 
-		  			action="#{NovoClienteBeans.inserir}"/>
-	  			<h:commandButton 
+		  			action="#{NovoClienteBeans.inserir}" ajax="false"/>
+	  			<p:commandButton 
 		  			value="Cancelar" 
 		  			action="/cliente/listar.xhtml"
-		  			immediate="true"/>
+		  			immediate="true" ajax="false"/>
 			</h:form>
 		</f:view>
 	</ui:define>

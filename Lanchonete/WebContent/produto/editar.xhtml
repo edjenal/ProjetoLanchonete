@@ -15,34 +15,34 @@
 			<p:messages/>
 				<table>
 					<tr>
-						<th colspan="2"> Editar Produto </th>
+						<th colspan="2" style="font-size:24px"> Editar Produto </th>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Categoria " for="id_cat"/></td>
+						<td><h:outputLabel value="Categoria " for="id_cat" style="font-size:24px"/></td>
 						<td>
-							<h:selectOneMenu id="id_cat" value="#{EditarProdutoBeans.id_cat}"> 
+							<p:selectOneMenu id="id_cat" value="#{EditarProdutoBeans.id_cat}"> 
 								<f:selectItems value="#{EditarProdutoBeans.categoria}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
-							</h:selectOneMenu>
+							</p:selectOneMenu>
 						</td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Descrição: " for="ds_prod"/></td>
-						<td><h:inputText id="ds_prod" value="#{EditarProdutoBeans.ds_prod}" required="true" requiredMessage="Descrição é obrigatório!"/>
+						<td><h:outputLabel value="Descrição: " for="ds_prod" style="font-size:24px"/></td>
+						<td><p:inputText id="ds_prod" value="#{EditarProdutoBeans.ds_prod}" required="true" requiredMessage="Descrição é obrigatório!"/>
 						</td>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Valor: " for="preco_prod"/></td>
-						<td><h:outputText value="R$ "/><h:inputText id="preco_prod" value="#{EditarProdutoBeans.preco_prod}" required="true" requiredMessage="Valor é obrigatório!"/>
+						<td><h:outputLabel value="Valor: " for="preco_prod" style="font-size:24px"/></td>
+						<td><h:outputText value="R$ " style="font-size:24px"/><p:inputText id="preco_prod" value="#{EditarProdutoBeans.preco_prod}" required="true" requiredMessage="Valor é obrigatório!"/>
 						</td>
 					</tr>
 				</table>
-				<h:commandButton 
+				<p:commandButton 
 		  			value="Confirmar" 
-		  			action="#{EditarProdutoBeans.update}"/>
-	  			<h:commandButton 
+		  			action="#{EditarProdutoBeans.update}" ajax="false"/>
+	  			<p:commandButton 
 		  			value="Cancelar" 
 		  			action="/produto/listar.xhtml"
-		  			immediate="true"/>
+		  			immediate="true" ajax="false"/>
 			</h:form>
 		</f:view>
 	</ui:define>

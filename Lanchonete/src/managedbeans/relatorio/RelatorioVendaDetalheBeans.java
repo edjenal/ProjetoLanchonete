@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 
+import bo.ClienteBO;
 import bo.VendaBO;
 import bo.VendaProdutoBO;
 
@@ -24,6 +25,8 @@ public class RelatorioVendaDetalheBeans {
 	private Date dt_pag_total;
 	private String valor_total_vendaTela;
 	private String valor_total_com_descontoTela;
+	
+	private String tel_cli;
 	
 	private VendaTO vendaTO;
 	
@@ -45,6 +48,8 @@ public class RelatorioVendaDetalheBeans {
 			valor_total_com_descontoTela = vendaTO.getValor_total_com_descontoTela();
 			VendaProdutoBO vendaProdutoBO = new VendaProdutoBO();
 			produtos = vendaProdutoBO.findById_venda(id_venda);
+			ClienteBO clienteBO = new ClienteBO();
+			tel_cli = clienteBO.findByPrimaryKey(vendaTO.getId_cli()).getTel_cli();
 		}
 		return id_venda;
 	}
@@ -141,6 +146,14 @@ public class RelatorioVendaDetalheBeans {
 		this.produtos = produtos;
 	}
 	
+	public String getTel_cli() {
+		return tel_cli;
+	}
+
+	public void setTel_cli(String tel_cli) {
+		this.tel_cli = tel_cli;
+	}
+
 	//funções xD
 	public String update(){
 		String retorno = "";
