@@ -32,8 +32,11 @@
 					</tr>
 					<tr>
 						<td><h:outputLabel value="Valor: " for="preco_prod" style="font-size:24px"/></td>
-						<td><h:outputText value="R$ " style="font-size:24px"/><p:inputText id="preco_prod" value="#{EditarProdutoBeans.preco_prod}" required="true" requiredMessage="Valor é obrigatório!"/>
-						</td>
+						<td><h:outputText value="R$ " style="font-size:24px"/><p:inputText id="preco_prod" 
+								value="#{EditarProdutoBeans.preco_prod}" required="true" requiredMessage="Valor é obrigatório!" validatorMessage="Valor inválido!">
+								<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
+								</p:inputText>
+							</td>
 					</tr>
 				</table>
 				<p:commandButton 

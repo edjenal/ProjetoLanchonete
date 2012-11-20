@@ -12,6 +12,7 @@
 	<ui:define name="content">
 	    <f:view>
 			<h:form>
+			<p:messages/>
 			<table>
 				<tr>
 					<td colspan="2"><h:outputText value="Venda" style="font-size:24px; font-align:center"/></td>
@@ -124,11 +125,17 @@
 				    	</tr>
 				    	<tr>
 				    		<td><h:outputText value="Valor do Desconto "/></td>
-				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.desconto}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.desconto}" validatorMessage="Valor do desconto inválido!">
+				    			<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
+				    			</p:inputText>
+				    			</td>
 				    	</tr>
 				    	<tr>
 				    		<td><h:outputText value="Valor Recebido"/></td>
-				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.recebido}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{VendaProdutosBeans.recebido}" validatorMessage="Valor recebido inválido!">
+				    			<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
+				    			</p:inputText>
+				    			</td>
 				    	</tr>
 				    	<tr>
 				    		<td><h:outputText value="Inserir mais itens?"/></td>

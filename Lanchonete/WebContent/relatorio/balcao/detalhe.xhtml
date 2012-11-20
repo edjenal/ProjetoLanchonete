@@ -45,11 +45,17 @@
 				    	<h:panelGroup rendered="#{RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
 				    		<td style="font-size:24px">Desconto: </td>
-				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}" validatorMessage="Valor inválido para desconto!">
+				    			<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
+				    			</p:inputText>
+				    			</td>
 				    	</tr>
 				    	<tr>
 				    		<td style="font-size:24px">Valor Recebido: </td>
-				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.recebido}"/></td>
+				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.recebido}" validatorMessage="Valor recebido inválido!">
+				    			<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
+				    			</p:inputText>
+				    			</td>
 				    	</tr>
 				    	<tr>
 				    		<td><p:commandButton value="Atualizar" action="#{RelatorioVendaDetalheBeans.update}" ajax="false"/></td>
