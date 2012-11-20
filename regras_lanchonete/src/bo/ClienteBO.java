@@ -15,7 +15,7 @@ public class ClienteBO {
 	private String SQL_update = "update tb_cliente set nm_cliente = ?, tel_cli = ?, cpf_cli = ? where id_cli = ?";
 	private String SQL_remove = "delete from tb_cliente where id_cli = ?";
 	private String SQL_findByPrimayKey = "select nm_cliente, tel_cli, cpf_cli from tb_cliente where id_cli = ?";
-	private String SQL_findAll = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente";
+	private String SQL_findAll = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente order by nm_cliente";
 	private String SQL_findByNm_cli = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente where nm_cliente LIKE ";
 
 	public boolean insert(String nm_cli, String tel_cli, String cpf_cli) {
@@ -162,7 +162,7 @@ public class ClienteBO {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery(SQL_findByNm_cli+nm_cliente);
+			rs = st.executeQuery(SQL_findByNm_cli+nm_cliente+" order by nm_cliente");
 			while (rs.next()) {
 				ClienteTO clienteTO = new ClienteTO();
 				clienteTO.setId_cli(rs.getInt("id_cli"));

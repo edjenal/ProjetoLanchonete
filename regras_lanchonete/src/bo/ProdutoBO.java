@@ -15,7 +15,7 @@ public class ProdutoBO {
 	private String SQL_update = "update tb_produto set id_cat = ?, ds_prod = ?, preco_prod = ? where id_prod = ?";
 	private String SQL_remove = "delete from tb_produto where id_prod = ?";
 	private String SQL_findByPrimayKey = "select prod.id_cat, cat.ds_cat, ds_prod, preco_prod from tb_produto prod inner join tb_categoria cat on cat.id_cat = prod.id_cat where id_prod = ?";
-	private String SQL_findAll = "select id_prod, prod.id_cat, cat.ds_cat, ds_prod, preco_prod from tb_produto prod inner join tb_categoria cat on cat.id_cat = prod.id_cat";
+	private String SQL_findAll = "select id_prod, prod.id_cat, cat.ds_cat, ds_prod, preco_prod from tb_produto prod inner join tb_categoria cat on cat.id_cat = prod.id_cat order by ds_prod";
 	private String SQL_findByDs_prod = "select id_prod, prod.id_cat, cat.ds_cat, ds_prod, preco_prod from tb_produto prod inner join tb_categoria cat on cat.id_cat = prod.id_cat where ds_prod LIKE ";
 	
 	public boolean insert(int id_cat, String ds_prod, Double preco_prod) {
@@ -164,7 +164,7 @@ public class ProdutoBO {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery(SQL_findByDs_prod+ds_prod+sqlPog);
+			rs = st.executeQuery(SQL_findByDs_prod+ds_prod+sqlPog+" order by ds_prod");
 			while (rs.next()) {
 				ProdutoTO produtoTO = new ProdutoTO();
 				produtoTO.setId_prod(rs.getInt("id_prod"));

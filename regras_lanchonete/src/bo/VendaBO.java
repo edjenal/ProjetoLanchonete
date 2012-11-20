@@ -20,8 +20,6 @@ public class VendaBO {
 	
 	private String SQL_findTop = "select top 1 * from tb_venda order by id_venda desc";
 	
-	
-	
 	private String SQL_findByPrimaryKey = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where id_venda = ?";
 	
 	private String SQL_update = "update tb_venda set valor_debito = ?, valor_desconto_venda = ?, dt_pag_total = ? where id_venda = ?";

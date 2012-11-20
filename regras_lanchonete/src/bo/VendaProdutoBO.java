@@ -15,7 +15,7 @@ public class VendaProdutoBO {
 	private String SQL_findById_venda = "select ds_cat, ds_prod, preco_prod_vendido, qtd_prod from tb_venda_produto vp "
 											+ "inner join tb_produto p on p.id_prod = vp.id_prod "
 											+ "inner join tb_categoria c on p.id_cat = c.id_cat "
-											+ "where id_venda = ?";
+											+ "where id_venda = ? order by ds_prod";
 	
 	public boolean insert(int id_prod, int id_venda, int qtd_prod, Double preco_prod_vendido) {
 		boolean retorno = true;
