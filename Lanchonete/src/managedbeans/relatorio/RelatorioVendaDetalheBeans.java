@@ -31,6 +31,8 @@ public class RelatorioVendaDetalheBeans {
 	private VendaTO vendaTO;
 	
 	private List<VendaProdutoTO> produtos = new ArrayList<VendaProdutoTO>();
+	
+	private String trocoTela;
 
 	public int getId_venda() {
 		String vazia  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_venda");
@@ -154,6 +156,10 @@ public class RelatorioVendaDetalheBeans {
 		this.tel_cli = tel_cli;
 	}
 
+	public String getTrocoTela() {
+		return trocoTela;
+	}
+
 	//funções xD
 	public String update(){
 		String retorno = "";
@@ -163,13 +169,25 @@ public class RelatorioVendaDetalheBeans {
 		recebido = recebido.replaceAll("\\.", "").replaceAll(",", ".");
 		Double rece = recebido==null || recebido.equals("") ? 0.0 : Double.parseDouble(recebido);
 		
-		Double debito = valor_total_venda - (rece + valor_desconto_venda);
+		//Double debito = valor_total_venda - (rece + valor_desconto_venda);
+		
+		Double troco = (valor_total_venda - valor_desconto_venda) - rece;
+		Double debito = 0.0;
+		if(troco < 0){
+			debito = 0.0;
+			troco = troco*(-1);
+		} else{
+			debito = troco;
+			troco = 0.0;
+		}
 		if(debito>=0){
 			java.util.Date data = new java.util.Date();
 			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
 			VendaBO vendaBO = new VendaBO();
 			cleanBeans();
-			retorno = !vendaBO.update(debito, valor_desconto_venda, dt_pag_total, id_venda) ? "/relatorio/balcao/filtro.xhtml" : null;
+			System.out.println(troco.toString().replaceAll("\\.", ","));
+			trocoTela = troco.toString().replaceAll("\\.", ",");
+			retorno = !vendaBO.update(debito, valor_desconto_venda, dt_pag_total, id_venda) ? "/relatorio/balcao/sucesso.xhtml" : null;
 		} else {
 			valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", ",");
 			recebido = recebido.replaceAll("\\.", ",");

@@ -272,7 +272,6 @@ public class VendaProdutosBeans {
 				vendaProdutoBO.insert(produtosSelecionados.get(i).getId_prod(), id_venda, produtosSelecionados.get(i).getQtd_venda(), produtosSelecionados.get(i).getPreco_prod());
 			}
 			cleanBeans();
-			//testar
 			System.out.println(troco.toString().replaceAll("\\.", ","));
 			trocoTela = troco.toString().replaceAll("\\.", ",");
 			retorno = "/venda/sucesso.xhtml?troco=";
