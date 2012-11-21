@@ -37,6 +37,8 @@ public class VendaProdutosBeans {
 	private List<ProdutoTO> produtosSelecionados = new ArrayList<ProdutoTO>();
 	private Integer qtd_venda = 1;
 	
+	private String trocoTela;
+	
 	
 	//gets e sets
 	public List<ProdutoTO> getProdutoTOs() {
@@ -144,10 +146,11 @@ public class VendaProdutosBeans {
 	public void setRecebido(String recebido) {
 		this.recebido = recebido;
 	}
+	public String getTrocoTela() {
+		return trocoTela;
+	}
+	
 	//fim dos gets e sets
-	
-	
-	
 	
 	
 	//funções
@@ -247,7 +250,16 @@ public class VendaProdutosBeans {
 		recebido = recebido.replaceAll("\\.", "").replaceAll(",", ".");
 		Double desc = desconto != null && !desconto.equals("") ? Double.parseDouble(desconto) : 0.0 ;
 		Double rece = recebido != null && !recebido.equals("") ? Double.parseDouble(recebido) : 0.0 ;
-		Double debito = total - (rece + desc);
+		//Double debito = total - (rece + desc);
+		Double troco = (total - desc) - rece;
+		Double debito = 0.0;
+		if(troco < 0){
+			debito = 0.0;
+			troco = troco*(-1);
+		} else{
+			debito = troco;
+			troco = 0.0;
+		}
 		if(debito>=0){
 			java.util.Date data = new java.util.Date();
 			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
@@ -260,7 +272,10 @@ public class VendaProdutosBeans {
 				vendaProdutoBO.insert(produtosSelecionados.get(i).getId_prod(), id_venda, produtosSelecionados.get(i).getQtd_venda(), produtosSelecionados.get(i).getPreco_prod());
 			}
 			cleanBeans();
-			retorno = "/venda/sucesso.xhtml";
+			//testar
+			System.out.println(troco.toString().replaceAll("\\.", ","));
+			trocoTela = troco.toString().replaceAll("\\.", ",");
+			retorno = "/venda/sucesso.xhtml?troco=";
 		} else {
 			desconto = desconto.replaceAll("\\.", ",");
 			recebido = recebido.replaceAll("\\.", ",");
