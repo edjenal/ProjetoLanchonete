@@ -11,7 +11,7 @@
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
 	<f:view>
-		<h:form>
+		<h:form id="listar">
 			<p:commandButton value="Novo" action="/cliente/novo.xhtml" actionListener="#{ListarClienteBeans.ocultar}" ajax="false"/>
 			<br/>
 			<h:outputText value="Nome: " style="font-size:24px"/>
@@ -37,6 +37,7 @@
 			        
 			        <p:column headerText="Débito" style="text-aling:center">
 			             <h:outputText value="R$ " /><h:outputText value="#{rs.valor_debito_tela}" />
+			             <p:commandButton id="showDialogButton" type="button" value="Quitar" onclick="dlg.show()" rendered="#{rs.valor_debito_tela!='0,0'}"/>
 			        </p:column>
 			
 			        <p:column headerText="Funções">
@@ -53,6 +54,19 @@
 			</h:panelGroup>
 		</h:form>
 	</f:view>
+	<p:dialog header="Quite a divida" widgetVar="dlg" resizable="false">
+		<f:view>
+			<h:form id="form2">
+				<h:panelGrid columns="2" style="margin-bottom:10px">
+					<h:outputLabel for="ValorRecebido" value="Valor Recebido R$" />
+					<p:inputText id="ValorRecebido" value="#{ListarClienteBeans.valor_recebidoTela}" />
+				</h:panelGrid>
+				<p:commandButton value="Confirmar" action="#{ListarClienteBeans.quitar}" oncomplete="dlg.hide();" ajax="false">
+					<f:param value="#{rs.id_cli}" name="id_cli" />
+				</p:commandButton>
+			</h:form>
+		</f:view>
+	</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

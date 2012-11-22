@@ -24,6 +24,8 @@ public class VendaBO {
 	
 	private String SQL_update = "update tb_venda set valor_debito = ?, valor_desconto_venda = ?, dt_pag_total = ? where id_venda = ?";
 	
+	private String SQL_findById_cli = "select id_venda, id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total from tb_venda where id_cli = ? and valor_debito != 0.0  order by dt_venda";
+	
 	public Integer insert(int id_cli, Double valor_total_venda, Double valor_desconto_venda, Double valor_debito, Date dt_pag_total) {
 		Integer id = null;
 		boolean retorno = true;
@@ -185,5 +187,42 @@ public class VendaBO {
 			}
 		}
 		return retorno;
+	}
+	
+	public List<VendaTO> findByIdCli(int id_cli){
+		List<VendaTO> resultado = new ArrayList<VendaTO>();
+		
+		Connection con = Conexao.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = con.prepareStatement(SQL_findById_cli);
+			st.setInt(1, id_cli);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				VendaTO vendaTO = new VendaTO();
+				vendaTO.setId_venda(rs.getInt("id_venda"));
+				vendaTO.setId_cli(rs.getInt("id_cli"));
+				vendaTO.setValor_total_venda(rs.getDouble("valor_total_venda"));
+				vendaTO.setValor_desconto_venda(rs.getDouble("valor_desconto_venda"));
+				vendaTO.setValor_debito(rs.getDouble("valor_debito"));
+				vendaTO.setDt_venda(rs.getDate("dt_venda"));
+				vendaTO.setDt_pag_total(rs.getDate("dt_pag_total"));
+				resultado.add(vendaTO);
+			}
+		} catch (Exception e) {
+			System.out.println("Falha ao buscar as vendas pelo cliente");
+			resultado = null;
+			e.printStackTrace();
+		} finally{
+			try{
+				rs.close();
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return resultado;
 	}
 }
