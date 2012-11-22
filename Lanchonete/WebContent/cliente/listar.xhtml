@@ -34,6 +34,10 @@
 			        <p:column headerText="Telefone">
 			            <h:outputText value="#{rs.tel_cli}" />
 			        </p:column>
+			        
+			        <p:column headerText="Débito" style="text-aling:center">
+			             <h:outputText value="R$ " /><h:outputText value="#{rs.valor_debito_tela}" />
+			        </p:column>
 			
 			        <p:column headerText="Funções">
 			            <p:commandButton value="Editar" action="/cliente/editar.xhtml" actionListener="#{ListarClienteBeans.ocultar}" ajax="false">

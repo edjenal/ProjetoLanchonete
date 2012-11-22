@@ -16,7 +16,11 @@ public class ClienteBO {
 	private String SQL_remove = "delete from tb_cliente where id_cli = ?";
 	private String SQL_findByPrimayKey = "select nm_cliente, tel_cli, cpf_cli from tb_cliente where id_cli = ?";
 	private String SQL_findAll = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente order by nm_cliente";
-	private String SQL_findByNm_cli = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente where nm_cliente LIKE ";
+	//erro no debito
+	private String SQL_findByNm_cli = 
+			"select cli.id_cli, nm_cliente, tel_cli, cpf_cli, sum(valor_debito) as valor_debito"+ 
+					" from tb_cliente cli left join tb_venda ven on ven.id_cli = cli.id_cli"+
+					" where nm_cliente LIKE";
 
 	public boolean insert(String nm_cli, String tel_cli, String cpf_cli) {
 		boolean retorno = true;
@@ -155,7 +159,7 @@ public class ClienteBO {
 	}
 	
 	public List<ClienteTO> findByNm_cli(String nm_cliente){
-		nm_cliente = "'"+nm_cliente+"%'";
+		nm_cliente = "'"+nm_cliente+"%' group by nm_cliente, tel_cli, cpf_cli, cli.id_cli";
 		List<ClienteTO> resultado = new ArrayList<ClienteTO>();
 		Connection con = Conexao.getConnection();
 		Statement st = null;
@@ -169,6 +173,7 @@ public class ClienteBO {
 				clienteTO.setNm_cli(rs.getString("nm_cliente"));
 				clienteTO.setTel_cli(rs.getString("tel_cli"));
 				clienteTO.setCpf_cli(rs.getString("cpf_cli"));
+				clienteTO.setValor_debito(rs.getDouble("valor_debito"));
 				resultado.add(clienteTO);
 			}
 		} catch (Exception e) {

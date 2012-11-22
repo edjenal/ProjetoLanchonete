@@ -7,6 +7,10 @@ public class ClienteTO {
 	private String tel_cli;
 	private String cpf_cli;
 	
+	private Double valor_debito;
+	
+	private String valor_debito_tela;
+	
 	public int getId_cli() {
 		return id_cli;
 	}
@@ -31,5 +35,19 @@ public class ClienteTO {
 	public void setCpf_cli(String cpf_cli) {
 		this.cpf_cli = cpf_cli;
 	}
+	public Double getValor_debito() {
+		return valor_debito;
+	}
+	public void setValor_debito(Double valor_debito) {
+		this.valor_debito = valor_debito;
+	}
+	public String getValor_debito_tela() {
+		valor_debito_tela = valor_debito!=null ? valor_debito.toString().replaceAll("\\.", ",") : "0,0";
+		return valor_debito_tela;
+	}
+	public void setValor_debito_tela(String valor_debito_tela) {
+		this.valor_debito_tela = valor_debito_tela;
+	}
+	
 	
 }
