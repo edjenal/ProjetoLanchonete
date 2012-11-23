@@ -22,9 +22,9 @@ public class VendaBO {
 	
 	private String SQL_findByPrimaryKey = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where id_venda = ?";
 	
-	private String SQL_update = "update tb_venda set valor_debito = ?, valor_desconto_venda = ?, dt_pag_total = ? where id_venda = ?";
+	private String SQL_update = "update tb_venda set valor_debito = ?, dt_pag_total = ? where id_venda = ?";
 	
-	private String SQL_findById_cli = "select id_venda, id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total from tb_venda where id_cli = ? and valor_debito != 0.0  order by dt_venda";
+	private String SQL_findById_cli = "select id_venda, id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total from tb_venda where id_cli = ? and valor_debito != 0.0  order by dt_venda desc";
 	
 	public Integer insert(int id_cli, Double valor_total_venda, Double valor_desconto_venda, Double valor_debito, Date dt_pag_total) {
 		Integer id = null;
@@ -163,16 +163,15 @@ public class VendaBO {
 		return vendaTO;
 	}
 	
-	public boolean update(Double valor_debito, Double valor_desconto_venda, Date dt_pag_total, int id_venda) {
+	public boolean update(Double valor_debito, Date dt_pag_total, int id_venda) {
 		boolean retorno = true;
 		Connection con = Conexao.getConnection();
 		PreparedStatement st = null;
 		try {
 			st = con.prepareStatement(SQL_update);
 			st.setDouble(1, valor_debito);
-			st.setDouble(2, valor_desconto_venda);
-			st.setDate(3, dt_pag_total);
-			st.setInt(4, id_venda);
+			st.setDate(2, dt_pag_total);
+			st.setInt(3, id_venda);
 			retorno = st.execute();
 		} catch (Exception e) {
 			e.printStackTrace();

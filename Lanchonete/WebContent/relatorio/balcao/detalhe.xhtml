@@ -40,15 +40,16 @@
 				    	</tr>
 				    	<tr>
 				    		<td style="font-size:24px">Sub-total: </td>
-				    		<td><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}" style="font-size:24px"/></td>
+				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_vendaTela}" style="font-size:24px"/></td>
+				    	</tr>
+				    	<tr>
+				    		<td style="font-size:24px">Desconto: </td>
+				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
 				    	</tr>
 				    	<h:panelGroup rendered="#{RelatorioVendaDetalheBeans.editavel}">
 				    	<tr>
-				    		<td style="font-size:24px">Desconto: </td>
-				    		<td><h:outputText value="R$ "/><p:inputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}" validatorMessage="Valor inválido para desconto!">
-				    			<f:validateRegex pattern="d*[0-9]{0,8}(,d*[0-9]{0,2})?"/>
-				    			</p:inputText>
-				    			</td>
+				    		<td style="font-size:24px">Débito: </td>
+				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_debitoTela}"/></td>
 				    	</tr>
 				    	<tr>
 				    		<td style="font-size:24px">Valor Recebido: </td>
@@ -63,10 +64,6 @@
 				    	</tr>
 				    	</h:panelGroup>
 				    	<h:panelGroup rendered="#{!RelatorioVendaDetalheBeans.editavel}">
-				    	<tr>
-				    		<td style="font-size:24px">Desconto: </td>
-				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_desconto_tela}"/></td>
-				    	</tr>
 				    	<tr>
 				    		<td style="font-size:24px">Total: </td>
 				    		<td style="font-size:24px"><h:outputText value="R$ "/><h:outputText value="#{RelatorioVendaDetalheBeans.valor_total_com_descontoTela}"/></td>

@@ -96,28 +96,32 @@ public class ListarClienteBeans {
 		mostrarTabela = false;
 	}
 	
-	public String quitar(){
-		Double valor_recebido = Double.parseDouble(valor_recebidoTela.replaceAll("\\,", "."));
+	public void setarId(){
 		String vazia  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_cli");
 		if(vazia!=null){
 			id_cli = Integer.parseInt(vazia);
-			VendaBO vendaBO = new VendaBO();
-			List<VendaTO> vendaTOs = new ArrayList<VendaTO>();
-			vendaTOs = vendaBO.findByIdCli(id_cli);
-			if(vendaBO!=null){
-				for(VendaTO venda : vendaTOs){
-					if(valor_recebido>0.0){
-						Double valor_debito = venda.getValor_debito() - valor_recebido;
-						valor_recebido = valor_recebido - venda.getValor_debito();
-						if(valor_debito<0.0){
-							valor_debito = 0.0;
-						}
-						java.util.Date data = new java.util.Date();
-						Date dt_pag_total = valor_debito > 0 ? null : new Date(data.getTime());
-						vendaBO.update(valor_debito, venda.getValor_desconto_venda(), dt_pag_total, venda.getId_venda());
-					} 	
-				} 
-			}
+		}
+	}
+	
+	public String quitar(){
+		Double valor_recebido = Double.parseDouble(valor_recebidoTela.replaceAll("\\,", "."));
+		valor_recebidoTela = "";
+		VendaBO vendaBO = new VendaBO();
+		List<VendaTO> vendaTOs = new ArrayList<VendaTO>();
+		vendaTOs = vendaBO.findByIdCli(id_cli);
+		if(vendaTOs!=null){
+			for(VendaTO venda : vendaTOs){
+				if(valor_recebido>=0.0){
+					Double valor_debito = venda.getValor_debito() - valor_recebido;
+					valor_recebido = valor_recebido - venda.getValor_debito();
+					if(valor_debito<0){
+						valor_debito = 0.0;
+					}
+					java.util.Date data = new java.util.Date();
+					Date dt_pag_total = valor_debito > 0 ? null : new Date(data.getTime());
+					vendaBO.update(valor_debito, dt_pag_total, venda.getId_venda());
+				} 	
+			} 
 			troco = valor_recebido>=0.0 ? valor_recebido.toString().replaceAll("\\.", ",") : null;
 		}
 		return "/cliente/sucesso.xhtml";

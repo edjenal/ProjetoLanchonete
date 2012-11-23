@@ -24,7 +24,7 @@
 			            Lista de Clientes
 			        </f:facet>
 			        <p:column headerText="Nome" style="width:40%">
-			            <h:outputText value="#{rs.nm_cli}" />
+			            <h:outputText value="#{rs.nm_cli}" /><h:outputText value=" -id: #{rs.id_cli}" />
 			        </p:column>
 			
 			        <p:column headerText="CPF">
@@ -37,7 +37,11 @@
 			        
 			        <p:column headerText="Débito" style="text-aling:center">
 			             <h:outputText value="R$ " /><h:outputText value="#{rs.valor_debito_tela}" />
-			             <p:commandButton id="showDialogButton" type="button" value="Quitar" onclick="dlg.show()" rendered="#{rs.valor_debito_tela!='0,0'}"/>
+			             <p:commandButton value="Quitar"  
+							             		rendered="#{rs.valor_debito_tela!='0,0'}" 
+							             		action="#{ListarClienteBeans.setarId}" onclick="dlg.show()" >
+			             	<f:param value="#{rs.id_cli}" name="id_cli" />
+			             </p:commandButton>
 			        </p:column>
 			
 			        <p:column headerText="Funções">
@@ -61,9 +65,7 @@
 					<h:outputLabel for="ValorRecebido" value="Valor Recebido R$" />
 					<p:inputText id="ValorRecebido" value="#{ListarClienteBeans.valor_recebidoTela}" />
 				</h:panelGrid>
-				<p:commandButton value="Confirmar" action="#{ListarClienteBeans.quitar}" oncomplete="dlg.hide();" ajax="false">
-					<f:param value="#{rs.id_cli}" name="id_cli" />
-				</p:commandButton>
+				<p:commandButton value="Confirmar" action="#{ListarClienteBeans.quitar}" oncomplete="dlg.hide();" ajax="false"/>
 			</h:form>
 		</f:view>
 	</p:dialog>

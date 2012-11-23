@@ -20,6 +20,8 @@ public class RelatorioVendaDetalheBeans {
 	private String recebido;
 	private boolean editavel = false;
 	private Double valor_total_venda;
+	private Double valor_debito;
+	private String valor_debitoTela;
 	private String nm_cliente;
 	private Date dt_venda;
 	private Date dt_pag_total;
@@ -41,6 +43,8 @@ public class RelatorioVendaDetalheBeans {
 			VendaBO vendaBO = new VendaBO();
 			vendaTO = vendaBO.findByPrimaryKey(id_venda);
 			valor_desconto_tela = vendaTO.getValor_desconto_vendaTela();
+			valor_debito = vendaTO.getValor_debito();
+			valor_debitoTela = vendaTO.getValor_debitoTela();
 			editavel = vendaTO.getDt_pag_total() != null && !vendaTO.getDt_pag_total().equals("") ? false : true; 
 			valor_total_venda = vendaTO.getValor_total_venda();
 			nm_cliente = vendaTO.getNm_cliente();
@@ -160,18 +164,30 @@ public class RelatorioVendaDetalheBeans {
 		return trocoTela;
 	}
 
+	public Double getValor_debito() {
+		return valor_debito;
+	}
+
+	public void setValor_debito(Double valor_debito) {
+		this.valor_debito = valor_debito;
+	}
+	public String getValor_debitoTela() {
+		return valor_debitoTela;
+	}
+
+	public void setValor_debitoTela(String valor_debitoTela) {
+		this.valor_debitoTela = valor_debitoTela;
+	}
+
 	//funções xD
 	public String update(){
 		String retorno = "";
-		valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", "").replaceAll(",", ".");
-		Double valor_desconto_venda = valor_desconto_tela == null || valor_desconto_tela.equals("") ? 0.0 : Double.parseDouble(valor_desconto_tela);
-		
-		recebido = recebido.replaceAll("\\.", "").replaceAll(",", ".");
+		recebido = recebido.replaceAll("\\.", "").replaceAll("\\,", ".");
 		Double rece = recebido==null || recebido.equals("") ? 0.0 : Double.parseDouble(recebido);
 		
 		//Double debito = valor_total_venda - (rece + valor_desconto_venda);
-		
-		Double troco = (valor_total_venda - valor_desconto_venda) - rece;
+
+		Double troco = valor_debito - rece;
 		Double debito = 0.0;
 		if(troco < 0){
 			debito = 0.0;
@@ -185,9 +201,8 @@ public class RelatorioVendaDetalheBeans {
 			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
 			VendaBO vendaBO = new VendaBO();
 			cleanBeans();
-			System.out.println(troco.toString().replaceAll("\\.", ","));
 			trocoTela = troco.toString().replaceAll("\\.", ",");
-			retorno = !vendaBO.update(debito, valor_desconto_venda, dt_pag_total, id_venda) ? "/relatorio/balcao/sucesso.xhtml" : null;
+			retorno = !vendaBO.update(debito, dt_pag_total, id_venda) ? "/relatorio/balcao/sucesso.xhtml" : null;
 		} else {
 			valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", ",");
 			recebido = recebido.replaceAll("\\.", ",");

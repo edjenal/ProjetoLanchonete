@@ -27,7 +27,7 @@
 		    		<td style="text-align:center; font-size:18px">-</td>
 		    		<td style="text-align:center;"><p:calendar value="#{RelatorioVendaFiltroBeans.dt_final}" size="6"/></td>
 		    		<td style="text-align:center;"><p:inputText value="#{RelatorioVendaFiltroBeans.nm_cli}" validatorMessage="Insira somente letras no Nome do Cliente!">
-		    				<f:validateRegex pattern="^[A-Z,a-z,ã,á,à,â,ê,í,ú,õ,é,ü,]"/>
+		    				<f:validateRegex pattern="^[a-zA-Zà-ÿÀ-Ý]+(\s[a-zA-Zà-ÿÀ-Ý]+(\.\s[a-zA-Zà-ÿÀ-Ý]+)*)*$"/>
 		    			</p:inputText>
 		    			</td>
 		    		<td >	
@@ -41,7 +41,7 @@
 	    		</tr>
 	    	</table>
 			<h:panelGroup rendered="#{RelatorioVendaFiltroBeans.tabelaVendas}">
-				<p:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" var="rs">
+				<p:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" var="rs" id="DTvendas">
 			        <f:facet name="header">Vendas</f:facet>
 			        <p:column headerText="Dt. Venda" style="width:9%">
 			            <h:outputText value="#{rs.dt_ven}" />
