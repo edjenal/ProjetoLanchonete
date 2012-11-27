@@ -13,6 +13,7 @@
 	    <f:view>
 			<h:form>
 			<h:inputHidden value="#{EditarCategoriaBeans.id_cat}"/>
+			<p:focus />
 			<p:messages/>
 				<table>
 					<tr>
@@ -22,6 +23,7 @@
 						<td><h:outputLabel value="Descrição: " for="ds_cat" style="font-size:24px"/></td>
 						<td><p:inputText id="ds_cat" value="#{EditarCategoriaBeans.ds_cat}" required="true" requiredMessage="Descrição é obrigatório!"/></td>
 					</tr>
+					
 				</table>
 				<p:commandButton 
 		  			value="Confirmar" 

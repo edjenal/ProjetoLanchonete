@@ -38,6 +38,7 @@ public class EditarCategoriaBeans {
 		this.ds_cat = ds_cat;
 	}
 	
+
 	public String update(){
 		CategoriaBO categoriaBO = new CategoriaBO();
 		return categoriaBO.update(ds_cat, id_cat) ? null : "/categoria/listar.xhtml";
