@@ -12,7 +12,7 @@
 	<ui:define name="content">
 	    <f:view>
 	    	<h:form>
-	    	<p:focus />
+	    	<p:focus for="nm_cli"/>
 	    	<p:messages/>
 	    	<table>
 	    		<tr>
@@ -27,7 +27,7 @@
 		    		<td style="text-align:center;"><p:calendar value="#{RelatorioVendaFiltroBeans.dt_inicial}" size="6"/></td>
 		    		<td style="text-align:center; font-size:18px">-</td>
 		    		<td style="text-align:center;"><p:calendar value="#{RelatorioVendaFiltroBeans.dt_final}" size="6"/></td>
-		    		<td style="text-align:center;"><p:inputText value="#{RelatorioVendaFiltroBeans.nm_cli}" validatorMessage="Insira somente letras no Nome do Cliente!">
+		    		<td style="text-align:center;"><p:inputText id="nm_cli" value="#{RelatorioVendaFiltroBeans.nm_cli}" validatorMessage="Insira somente letras no Nome do Cliente!">
 		    				<f:validateRegex pattern="^[a-zA-Zà-ÿÀ-Ý]+(\s[a-zA-Zà-ÿÀ-Ý]+(\.\s[a-zA-Zà-ÿÀ-Ý]+)*)*$"/>
 		    			</p:inputText>
 		    			</td>
