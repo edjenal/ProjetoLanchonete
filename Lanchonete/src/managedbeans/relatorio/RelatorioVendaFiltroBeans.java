@@ -1,12 +1,22 @@
 package managedbeans.relatorio;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import to.VendaTO;
-
 import bo.VendaBO;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
 
 public class RelatorioVendaFiltroBeans {
 	
@@ -102,5 +112,63 @@ public class RelatorioVendaFiltroBeans {
 			tabelaVendas = false;
 		}
 		return "/relatorio/balcao/filtro.xhtml";
+	}
+	
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+		
+		Document pdf = (Document) document;
+		pdf.setMargins(1, 1, 10, 10);
+		
+	    pdf.setPageSize(PageSize.A4);
+	    pdf.setHtmlStyleClass("font-size:12");
+	    pdf.open();
+	    
+	    PdfPTable tabela = new PdfPTable(3); //cria uma tabela com 3 colunas
+	    PdfPCell celula1 = new PdfPCell(Image.getInstance("/imagens/sanduiche1.jpg")); //cria uma celula com parametro de Image.getInstance com o caminho da imagem do cabeçalho
+
+	    Paragraph p = new Paragraph("Lista de Vendas"); 
+	    PdfPCell celula2 = new PdfPCell(p); //adiciona o paragrafo com o titulo na segunda celula.
+	    
+	    p = new Paragraph(new SimpleDateFormat("dd/MM/yyyy hh:mm").format(new Date().getTime())); 
+	    PdfPCell celula3 = new PdfPCell(p); //adiciona o paragrafo com o titulo na segunda celula.
+
+	    celula1.setBorder(-1); // tira as bordas da celula 
+	    
+	    celula2.setBorder(-1);
+	    celula2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+	    celula2.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);//centro da tabela
+	    
+	    celula3.setBorder(-1);
+	    celula3.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+	    celula3.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);//parte de baixo da tabela
+
+	    tabela.addCell(celula1); //adiciona as celulas na tabela.
+	    tabela.addCell(celula2);
+	    tabela.addCell(celula3);
+	    
+	    pdf.add(tabela); // coloca a tabela na pagina do PDF.
+	    
+	    pdf.add(new Paragraph(" "));
+	    
+	}
+	
+	public void postProcessPDF(Object document) throws DocumentException {
+		Document pdf = (Document) document;
+		
+		PdfPTable tabela = new PdfPTable(1); 
+
+	    Paragraph p = new Paragraph("Rodapé \n"); 
+	    PdfPCell celula2 = new PdfPCell(p);
+	    
+	    celula2.setBorder(-1);
+	    celula2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+	    celula2.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+	    
+	    tabela.addCell(celula2);
+	    
+	    pdf.add(tabela);
+	    
+		pdf.add(new Paragraph(" "));
+		
 	}
 }

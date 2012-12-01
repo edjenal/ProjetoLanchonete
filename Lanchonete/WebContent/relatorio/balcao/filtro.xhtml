@@ -38,41 +38,68 @@
 		    				<f:selectItem itemLabel="Pago" itemValue="3" />   
 		    			</p:selectOneMenu>
 		    		</td>
-		    		<td><p:commandButton action="#{RelatorioVendaFiltroBeans.filtar}" value="Filtrar" ajax="false"/></td>
+		    		<td><p:commandButton action="#{RelatorioVendaFiltroBeans.filtar}" value="Filtrar" ajax="false"/>
+		    		</td>
 	    		</tr>
 	    	</table>
 			<h:panelGroup rendered="#{RelatorioVendaFiltroBeans.tabelaVendas}">
-				<p:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" var="rs" id="DTvendas">
+			<p:commandButton id="btPDF" value="PDF" ajax="false">
+				<p:dataExporter type="pdf" target="DTvendas" fileName="vendas" encoding="ISO-8859-1" postProcessor="#{RelatorioVendaFiltroBeans.postProcessPDF}" preProcessor="#{RelatorioVendaFiltroBeans.preProcessPDF}"/>
+			</p:commandButton>
+				<p:dataTable value="#{RelatorioVendaFiltroBeans.vendas}" var="rs" id="DTvendas" 
+					paginator="true" rows="5" >
 			        <f:facet name="header">Vendas</f:facet>
-			        <p:column headerText="Dt. Venda" style="width:9%">
-			            <h:outputText value="#{rs.dt_ven}" />
-			        </p:column>
-			
-			        <p:column headerText="Dt. Quitação" style="width:9%">
+			        
+			        <p:column style="width:9%" sortBy="#{rs.dt_ven}" >
+				        <f:facet name="header">
+							<h:outputText value="Dt. Venda"/>
+						</f:facet>
+						<h:outputText value="#{rs.dt_ven}" />
+					</p:column>
+			        
+			        <p:column style="width:9%" sortBy="#{rs.dt_pag}" >
+			        	<f:facet name="header">
+							<h:outputText value="Dt. Quitação"/>
+						</f:facet>
 			            <h:outputText value="#{rs.dt_pag}" />
 			        </p:column>
 			
-			        <p:column headerText="Cliente" style="width:45%">
+			        <p:column style="width:45%" sortBy="#{rs.nm_cliente}">
+			        	<f:facet name="header">
+							<h:outputText value="Cliente"/>
+						</f:facet>
 			            <h:outputText value="#{rs.nm_cliente}" />
 			        </p:column>
 			
-			        <p:column headerText="Sub-total">
+			        <p:column sortBy="#{rs.valor_total_vendaTela}">
+			        	<f:facet name="header">
+							<h:outputText value="Sub-total"/>
+						</f:facet>
 			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_total_vendaTela}" />
 			        </p:column>
 			        
-			        <p:column headerText="Desconto">
+			        <p:column sortBy="#{rs.valor_desconto_vendaTela}">
+			        	<f:facet name="header">
+							<h:outputText value="Desconto"/>
+						</f:facet>
 			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_desconto_vendaTela}" />
 			        </p:column>
 			        
-			        <p:column headerText="Total">
+			        <p:column sortBy="#{rs.valor_total_com_descontoTela}">
+			        	<f:facet name="header">
+							<h:outputText value="Total"/>
+						</f:facet>
 			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_total_com_descontoTela}" />
 			        </p:column>
 			        
-			         <p:column headerText="Débito">
+			         <p:column sortBy="#{rs.valor_debitoTela}">
+			         	<f:facet name="header">
+							<h:outputText value="Débito"/>
+						</f:facet>
 			            <h:outputText value="R$ "/><h:outputText value="#{rs.valor_debitoTela}" />
 			        </p:column>
 			        
-			        <p:column headerText="">
+			        <p:column headerText="" exportable="false">
 			            <h:commandButton value="Detalhes" action="/relatorio/balcao/detalhe.xhtml" >
 							<f:param value="#{rs.id_venda}" name="id_venda" />
 							<f:param value="#{rs.id_cli}" name="id_cli" />
