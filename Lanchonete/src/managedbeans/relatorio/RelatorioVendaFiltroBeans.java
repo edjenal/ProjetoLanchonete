@@ -157,7 +157,8 @@ public class RelatorioVendaFiltroBeans {
 		
 		PdfPTable tabela = new PdfPTable(1); 
 
-	    Paragraph p = new Paragraph("Rodapé \n"); 
+	    /*
+		Paragraph p = new Paragraph("Rodapé \n"); 
 	    PdfPCell celula2 = new PdfPCell(p);
 	    
 	    celula2.setBorder(-1);
@@ -165,7 +166,7 @@ public class RelatorioVendaFiltroBeans {
 	    celula2.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
 	    
 	    tabela.addCell(celula2);
-	    
+	    */
 	    pdf.add(tabela);
 	    
 		pdf.add(new Paragraph(" "));

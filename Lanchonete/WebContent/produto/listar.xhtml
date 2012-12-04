@@ -47,11 +47,11 @@
 				            <h:outputText value="#{rs.ds_prod}" />
 				        </p:column>
 				
-				        <p:column headerText="Valor" style="width:0%">
+				        <p:column headerText="Valor" style="width:0%; text-align: right;">
 				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
 				        </p:column>
 				
-				        <p:column headerText="Funções" style="width:0%">
+				        <p:column headerText="Funções" style="width:0%; text-align: center;">
 				           <p:commandButton value="Editar" action="/produto/editar.xhtml"
 								actionListener="#{ListarProdutoBeans.ocultar}" ajax="false">
 								<f:param value="#{rs.id_prod}" name="id_prod" />

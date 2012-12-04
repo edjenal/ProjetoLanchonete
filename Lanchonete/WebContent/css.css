@@ -1,0 +1,17 @@
+.red{
+	color: red !important;
+}
+.titulo{
+	font-weight: bold;
+	font-style: italic; 
+	color:black; 
+	font-size: 42px;
+	font-family: inherit;
+	font-variant: small-caps;
+	color: white;
+	margin-top: -5px;
+	margin-bottom: -1px;
+	text-align: center;
+	padding-top: 10px;
+	
+}

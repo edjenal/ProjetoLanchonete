@@ -20,32 +20,33 @@
 			<p:commandButton value="Buscar" action="#{ListarClienteBeans.buscar}" ajax="false"/>
 			<br/>
 			<h:panelGroup rendered="#{ListarClienteBeans.mostrarTabela}">
-				<p:dataTable value="#{ListarClienteBeans.clienteTOs}" var="rs">
+				<p:dataTable value="#{ListarClienteBeans.clienteTOs}" var="rs" paginator="true" rows="10"
+					rowStyleClass="#{rs.valor_debito > 0.0 ? 'red' : null}">
 					<f:facet name="header">
 			            Lista de Clientes
 			        </f:facet>
 			        <p:column headerText="Nome" style="width:40%">
-			            <h:outputText value="#{rs.nm_cli}" /><h:outputText value=" -id: #{rs.id_cli}" />
+			            <h:outputText value="#{rs.nm_cli}" />
 			        </p:column>
 			
-			        <p:column headerText="CPF">
+			        <p:column headerText="CPF" style="text-align: center;">
 			            <h:outputText value="#{rs.cpf_cli}" />
 			        </p:column>
 			
-			        <p:column headerText="Telefone">
+			        <p:column headerText="Telefone" style="text-align: center;">
 			            <h:outputText value="#{rs.tel_cli}" />
 			        </p:column>
 			        
-			        <p:column headerText="Débito" style="text-aling:center">
+			        <p:column headerText="Débito" style="text-align: center;" >
 			             <h:outputText value="R$ " /><h:outputText value="#{rs.valor_debito_tela}" />
 			             <p:commandButton value="Quitar"  
 							             		rendered="#{rs.valor_debito_tela!='0,0'}" 
-							             		action="#{ListarClienteBeans.setarId}" onclick="dlg.show()" >
+							             		action="#{ListarClienteBeans.setarId}" onclick="dlg.show()">
 			             	<f:param value="#{rs.id_cli}" name="id_cli" />
 			             </p:commandButton>
 			        </p:column>
 			
-			        <p:column headerText="Funções">
+			        <p:column headerText="Funções" style="width:18%; text-align: center;">
 			            <p:commandButton value="Editar" action="/cliente/editar.xhtml" actionListener="#{ListarClienteBeans.ocultar}" ajax="false">
 							<f:param value="#{rs.id_cli}" name="id_cli" />
 						</p:commandButton>

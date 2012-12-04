@@ -20,6 +20,6 @@
   </servlet-mapping>
   <context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>ui-lightness</param-value>
+		<param-value>black-tie</param-value>
 	</context-param>
 </web-app>
