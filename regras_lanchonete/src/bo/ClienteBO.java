@@ -15,8 +15,7 @@ public class ClienteBO {
 	private String SQL_update = "update tb_cliente set nm_cliente = ?, tel_cli = ?, cpf_cli = ? where id_cli = ?";
 	private String SQL_remove = "delete from tb_cliente where id_cli = ?";
 	private String SQL_findByPrimayKey = "select nm_cliente, tel_cli, cpf_cli from tb_cliente where id_cli = ?";
-	private String SQL_findAll = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente order by nm_cliente";
-	//erro no debito
+	private String SQL_findAll = "select id_cli, nm_cliente, tel_cli, cpf_cli from tb_cliente";
 	private String SQL_findByNm_cli = 
 			"select cli.id_cli, nm_cliente, tel_cli, cpf_cli, sum(valor_debito) as valor_debito"+ 
 					" from tb_cliente cli left join tb_venda ven on ven.id_cli = cli.id_cli"+
@@ -107,6 +106,42 @@ public class ClienteBO {
 		}
 	}
 	
+	public ClienteTO findByCpf(String cpf_cli) {
+		Connection con = Conexao.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append(SQL_findAll);
+			sql.append(" where cpf_cli = ?");
+			st = con.prepareStatement(sql.toString());
+			st.setString(1, cpf_cli);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				ClienteTO clienteTO = new ClienteTO();
+				clienteTO.setId_cli(rs.getInt("id_cli"));
+				clienteTO.setNm_cli(rs.getString("nm_cliente"));
+				clienteTO.setTel_cli(rs.getString("tel_cli"));
+				clienteTO.setCpf_cli(rs.getString("cpf_cli"));
+				return clienteTO;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Falha ao buscar cliente pelo cpf");
+			return null;
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public List<ClienteTO> findAll(){
 		List<ClienteTO> resultado = new ArrayList<ClienteTO>();
 		Connection con = Conexao.getConnection();
@@ -114,7 +149,7 @@ public class ClienteBO {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery(SQL_findAll);
+			rs = st.executeQuery(SQL_findAll+" order by nm_cliente");
 			while (rs.next()) {
 				ClienteTO clienteTO = new ClienteTO();
 				clienteTO.setId_cli(rs.getInt("id_cli"));

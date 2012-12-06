@@ -120,7 +120,7 @@ public class RelatorioVendaFiltroBeans {
 		pdf.setMargins(1, 1, 10, 10);
 		
 	    pdf.setPageSize(PageSize.A4);
-	    pdf.setHtmlStyleClass("font-size:12");
+	    
 	    pdf.open();
 	    
 	    PdfPTable tabela = new PdfPTable(3); //cria uma tabela com 3 colunas
