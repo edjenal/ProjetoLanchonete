@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+			<h:inputHidden value="#{EditarDepFuncBeans.idDepFunc}"/>
+			<p:focus />
+			<p:messages/>
+				<table>
+					<tr>
+						<th colspan="2" style="font-size:24px"> Editar Departamento </th>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Descrição: " for="ds_cat" style="font-size:24px"/></td>
+						<td><p:inputText id="ds_cat" value="#{EditarDepFuncBeans.dsDepFUnc}" required="true" requiredMessage="Descrição é obrigatório!"/></td>
+					</tr>
+					
+				</table>
+				<p:commandButton 
+		  			value="Confirmar" 
+		  			action="#{EditarDepFuncBeans.update}" ajax="false"/>
+	  			<p:commandButton 
+		  			value="Cancelar" 
+		  			action="/depFunc/listar.xhtml"
+		  			immediate="true" ajax="false"/>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

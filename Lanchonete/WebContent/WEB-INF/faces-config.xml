@@ -41,6 +41,42 @@
 	</managed-bean>
 	<!-- Fim Categoria -->
 	
+	<!-- Departamento Funcionario -->
+	<managed-bean>
+		<managed-bean-name>ListarDepFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.depFunc.ListarDepFuncBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovoDepFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.depFunc.NovoDepFuncBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarDepFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.depFunc.EditarDepFuncBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Categoria Funcionario -->
+	
+	<!-- Area -->
+	<managed-bean>
+		<managed-bean-name>ListarAreaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.area.ListarAreaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovaAreaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.area.NovaAreaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarAreaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.area.EditarAreaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Area -->
+	
 	<!-- Produto -->
 	<managed-bean>
 		<managed-bean-name>ListarProdutoBeans</managed-bean-name>

@@ -10,30 +10,29 @@
 
 <ui:composition template="/tema.xhtml">
 	<ui:define name="content">
-		<f:view>
+	    <f:view>
 			<h:form>
-				<p:commandButton value="Nova" action="/categoria/nova.xhtml" ajax="false"/>
+				<p:commandButton value="Novo" action="/depFunc/novo.xhtml" ajax="false"/>
 				<br/>
-				<p:dataTable value="#{ListarCategoriaBeans.categoriaTO}" var="rs" style="width:50%">
+				<p:dataTable value="#{ListarDepFuncBeans.departamentos}" var="rs" style="width:50%">
 					<f:facet name="header">
-			            Lista de Categorias
+			            Departamentos
 			        </f:facet>
 			        <p:column headerText="Descrição">
-			            <h:outputText value="#{rs.ds_cat}" />
+			            <h:outputText value="#{rs.dsDepFUnc}" />
 			        </p:column>
 			
 			        <p:column headerText="Funções" style="width:40%; text-align: center;">
-			            <p:commandButton value="Editar" action="/categoria/editar.xhtml" ajax="false">
-							<f:param value="#{rs.id_cat}" name="id_cat" />
+			            <p:commandButton value="Editar" action="/depFunc/editar.xhtml" ajax="false">
+							<f:param value="#{rs.idDepFunc}" name="idDepFunc" />
 						</p:commandButton>
 						<p:commandButton value="Deletar" ajax="false"
-							action="#{ListarCategoriaBeans.deletar}"
-							onclick="if (!confirm('Quer realmente deletar essa Categoria?')) return false">
-							<f:param value="#{rs.id_cat}" name="id_cat" />
+							action="#{ListarDepFuncBeans.deletar}"
+							onclick="if (!confirm('Quer realmente deletar esse Departamento?')) return false">
+							<f:param value="#{rs.idDepFunc}" name="idDepFunc" />
 						</p:commandButton>
 			        </p:column>
 			    </p:dataTable>
-				
 			</h:form>
 		</f:view>
 	</ui:define>

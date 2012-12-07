@@ -12,24 +12,24 @@
 	<ui:define name="content">
 		<f:view>
 			<h:form>
-				<p:commandButton value="Nova" action="/categoria/nova.xhtml" ajax="false"/>
+				<p:commandButton value="Nova" action="/area/nova.xhtml" ajax="false"/>
 				<br/>
-				<p:dataTable value="#{ListarCategoriaBeans.categoriaTO}" var="rs" style="width:50%">
+				<p:dataTable value="#{ListarAreaBeans.areaTO}" var="rs" style="width:50%">
 					<f:facet name="header">
-			            Lista de Categorias
+			            Areas
 			        </f:facet>
 			        <p:column headerText="Descrição">
-			            <h:outputText value="#{rs.ds_cat}" />
+			            <h:outputText value="#{rs.dsArea}" />
 			        </p:column>
 			
 			        <p:column headerText="Funções" style="width:40%; text-align: center;">
-			            <p:commandButton value="Editar" action="/categoria/editar.xhtml" ajax="false">
-							<f:param value="#{rs.id_cat}" name="id_cat" />
+			            <p:commandButton value="Editar" action="/area/editar.xhtml" ajax="false">
+							<f:param value="#{rs.idArea}" name="idArea" />
 						</p:commandButton>
 						<p:commandButton value="Deletar" ajax="false"
-							action="#{ListarCategoriaBeans.deletar}"
-							onclick="if (!confirm('Quer realmente deletar essa Categoria?')) return false">
-							<f:param value="#{rs.id_cat}" name="id_cat" />
+							action="#{ListarAreaBeans.deletar}"
+							onclick="if (!confirm('Quer realmente deletar essa Área?')) return false">
+							<f:param value="#{rs.idArea}" name="idArea" />
 						</p:commandButton>
 			        </p:column>
 			    </p:dataTable>
