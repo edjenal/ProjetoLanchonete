@@ -59,6 +59,24 @@
 	</managed-bean>
 	<!-- Fim Categoria Funcionario -->
 	
+	<!-- Funcionario -->
+	<managed-bean>
+		<managed-bean-name>ListarFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.func.ListarFuncBeans</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovoFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.func.NovoFuncBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarFuncBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.func.EditarFuncBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Funcionario -->
+	
 	<!-- Area -->
 	<managed-bean>
 		<managed-bean-name>ListarAreaBeans</managed-bean-name>
@@ -76,6 +94,42 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- Fim Area -->
+	
+	<!-- Turno -->
+	<managed-bean>
+		<managed-bean-name>ListarTurnoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.turno.ListarTurnoBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovoTurnoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.turno.NovoTurnoBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarTurnoBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.turno.EditarTurnoBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim Turno -->
+	
+	<!-- Mesa -->
+	<managed-bean>
+		<managed-bean-name>ListarMesaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.mesa.ListarMesaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>NovaMesaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.mesa.NovaMesaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>EditarMesaBeans</managed-bean-name>
+		<managed-bean-class>managedbeans.mesa.EditarMesaBeans</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<!-- Fim mesa -->
 	
 	<!-- Produto -->
 	<managed-bean>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+			<p:focus />
+			<p:messages/>
+				<table>
+					<tr>
+						<th colspan="2" style="font-size:24px"> Cadastro de Mesa </th>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Area" for="idArea" style="font-size:24px"/></td>
+						<td>
+							<p:selectOneMenu id="idArea" value="#{NovaMesaBeans.mesa.idArea}"> 
+								<f:selectItems value="#{NovaMesaBeans.areas}"  var="area" itemLabel="#{area.dsArea}" itemValue="#{area.idArea}"/>
+							</p:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Descrição: " for="dsMesa" style="font-size:24px"/></td>
+						<td><p:inputText id="dsMesa" value="#{NovaMesaBeans.mesa.dsMesa}" required="true" requiredMessage="Descrição é obrigatório!"/>
+						</td>
+					</tr>
+				</table>
+				<p:commandButton 
+		  			value="Cadastrar" 
+		  			action="#{NovaMesaBeans.inserir}" ajax="false"/>
+	  			<p:commandButton 
+		  			value="Cancelar" 
+		  			action="/mesa/listar.xhtml"
+		  			immediate="true" ajax="false"/>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

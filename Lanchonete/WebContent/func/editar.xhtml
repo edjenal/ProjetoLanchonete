@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form>
+			<h:inputHidden value="#{EditarFuncBeans.func.idFunc}"/>
+			<p:focus />
+			<p:messages/>
+				<table>
+					<tr>
+						<th colspan="2" style="font-size:24px"> Editar Funcionário </th>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Departamento" for="idDep" style="font-size:24px"/></td>
+						<td>
+							<p:selectOneMenu id="idDep" value="#{EditarFuncBeans.func.idDepFunc}"> 
+								<f:selectItems value="#{EditarFuncBeans.deps}"  var="dep" itemLabel="#{dep.dsDepFUnc}" itemValue="#{dep.idDepFunc}"/>
+							</p:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Nome:" for="nome" style="font-size:24px"/></td>
+						<td><p:inputText id="nome" value="#{EditarFuncBeans.func.nmFunc}" required="true" requiredMessage="Nome é obrigatório"/></td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Ativo:" for="ativo" style="font-size:24px"/></td>
+						<td><p:selectOneMenu id="ativo" value="#{EditarFuncBeans.func.flAtivoFunc}">
+								<f:selectItem itemValue="#{true}" itemLabel="Sim"/>
+								<f:selectItem itemValue="#{false}" itemLabel="Não"/>
+							</p:selectOneMenu>
+						</td>
+					</tr>
+					
+					<tr>
+						<td><h:outputLabel value="CPF:" for="cpf" style="font-size:24px"/></td>
+						<td><h:outputLabel id="cpf" style="font-size:24px" value="#{EditarFuncBeans.func.cpfFunc}" /></td>
+					</tr>
+					<tr>
+						<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
+						<td><p:inputMask id="telefone" value="#{EditarFuncBeans.func.telFunc}" mask="(99)9999-9999" size="13"/></td>
+					</tr>
+				</table>
+				<p:commandButton 
+		  			value="Confirmar" 
+		  			action="#{EditarFuncBeans.update}" ajax="false"/>
+	  			<p:commandButton 
+		  			value="Cancelar" 
+		  			action="/func/listar.xhtml"
+		  			immediate="true" ajax="false"/>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

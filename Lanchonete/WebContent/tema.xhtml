@@ -15,7 +15,7 @@
 <div id="header">
     <ui:insert name="header">
     	<p class="ui-datatable-header ui-widget-header titulo">
-    		Lanchonete
+    		Restaurante
     		<h:graphicImage style="padding-left:2%" value="/imagens/pacmanlogo.png"/>
     	</p>
 		<p:menubar>
@@ -28,13 +28,20 @@
 				<p:menuitem value="Listar" url="/produto/listar.xhtml" />
 				<p:menuitem value="Categoria" url="/categoria/listar.xhtml" />
 			</p:submenu>
-				<p:submenu label="Venda">
+			<p:submenu label="Venda">
 				<p:menuitem value="Balcão" url="/venda/cliente.xhtml" />
 				<p:menuitem value="Mesa" url="#" />
 			</p:submenu>
-				<p:submenu label="Relatório">
+			<p:submenu label="Relatório">
 				<p:menuitem value="Balcão" url="/relatorio/balcao/filtro.xhtml" />
 				<p:menuitem value="Mesa" url="#" />
+			</p:submenu>
+			<p:submenu label="Administrativo">
+				<p:menuitem value="Turno" url="/turno/listar.xhtml" />
+				<p:menuitem value="Area" url="/area/listar.xhtml" />
+				<p:menuitem value="Departamento" url="/depFunc/listar.xhtml" />
+				<p:menuitem value="Funcionario" url="/func/listar.xhtml" />
+				<p:menuitem value="Mesa" url="/mesa/listar.xhtml" />
 			</p:submenu>
 		</p:menubar>
 		<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->

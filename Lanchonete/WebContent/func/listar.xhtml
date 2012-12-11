@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	<f:view>
+		<h:form id="listar">
+		<p:focus />
+			<p:commandButton value="Novo" action="/func/novo.xhtml" actionListener="#{ListarFuncBeans.ocultar}" ajax="false"/>
+			<table>
+				<tr>
+					<td><h:outputText value="Nome: " style="font-size:24px"/></td>
+					<td><p:inputText value="#{ListarFuncBeans.func.nmFunc}" /></td>
+					<td><h:outputText value="Ativo: " style="font-size:24px"/></td>
+					<td><p:selectOneMenu value="#{ListarFuncBeans.func.flAtivoFunc}">
+							<f:selectItem itemValue="#{true}" itemLabel="Sim"/>
+							<f:selectItem itemValue="#{false}" itemLabel="Não"/>
+						</p:selectOneMenu></td>
+					<td colspan="2"><p:commandButton value="Buscar" action="#{ListarFuncBeans.buscar}" ajax="false"/></td>
+				</tr>
+			</table>
+			<br/>
+			<h:panelGroup rendered="#{ListarFuncBeans.mostrarTabela}">
+				<p:dataTable value="#{ListarFuncBeans.funcs}" var="rs" paginator="true" rows="10">
+					<f:facet name="header">
+			            Funcionários
+			        </f:facet>
+			        <p:column headerText="Nome" style="width:40%" sortBy="#{rs.nmFunc}">
+			            <h:outputText value="#{rs.nmFunc}" />
+			        </p:column>
+			
+			        <p:column headerText="CPF" style="text-align: center;">
+			            <h:outputText value="#{rs.cpfFunc}" />
+			        </p:column>
+			
+			        <p:column headerText="Telefone" style="text-align: center;">
+			            <h:outputText value="#{rs.telFunc}" />
+			        </p:column>
+			        
+			        <p:column headerText="Ativo" style="text-align: center;">
+			            <h:outputText value="#{rs.ativo}" />
+			        </p:column>
+			        
+			        <p:column headerText="Departamento" style="text-align: center;" sortBy="#{rs.dsDepFunc}">
+			            <h:outputText value="#{rs.dsDepFunc}" />
+			        </p:column>
+			        
+			        <p:column headerText="" style="width:18%; text-align: center;">
+			            <p:commandButton value="Editar" action="/func/editar.xhtml" actionListener="#{ListarFuncBeans.ocultar}" ajax="false">
+							<f:param value="#{rs.idFunc}" name="idFunc" />
+						</p:commandButton>
+			        </p:column>
+			    </p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</f:view>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,31 +1,33 @@
 package to;
-//faltam atributos
-public class FuncionarioTO {
-	private Integer idFunc; 
-	private Integer idDepFunc; 
-	private boolean flAtivoFunc;
-	private String nmFunc; 
-	private String cpfFunc; 
+
+public class FuncTO {
+	
+	private int idFunc;
+	private int idDepFunc;
+	private Boolean flAtivoFunc;
+	private String nmFunc;
+	private String cpfFunc;
 	private String telFunc;
 	private String dsDepFunc;
 	private String ativo;
+	private String dsDepFUnc;
 	
-	public Integer getIdFunc() {
+	public int getIdFunc() {
 		return idFunc;
 	}
-	public void setIdFunc(Integer idFunc) {
+	public void setIdFunc(int idFunc) {
 		this.idFunc = idFunc;
 	}
-	public Integer getIdDepFunc() {
+	public int getIdDepFunc() {
 		return idDepFunc;
 	}
-	public void setIdDepFunc(Integer idDepFunc) {
+	public void setIdDepFunc(int idDepFunc) {
 		this.idDepFunc = idDepFunc;
 	}
-	public boolean isFlAtivoFunc() {
+	public Boolean getFlAtivoFunc() {
 		return flAtivoFunc;
 	}
-	public void setFlAtivoFunc(boolean flAtivoFunc) {
+	public void setFlAtivoFunc(Boolean flAtivoFunc) {
 		this.flAtivoFunc = flAtivoFunc;
 	}
 	public String getNmFunc() {
@@ -53,12 +55,16 @@ public class FuncionarioTO {
 		this.dsDepFunc = dsDepFunc;
 	}
 	public String getAtivo() {
-		return isFlAtivoFunc() ? "Sim" : "Não";
+		return getFlAtivoFunc() ? "Sim" : "Não";
 	}
 	public void setAtivo(String ativo) {
 		this.ativo = ativo;
 	}
+	public String getDsDepFUnc() {
+		return dsDepFUnc;
+	}
+	public void setDsDepFUnc(String dsDepFUnc) {
+		this.dsDepFUnc = dsDepFUnc;
+	}
 	
-	
-
 }

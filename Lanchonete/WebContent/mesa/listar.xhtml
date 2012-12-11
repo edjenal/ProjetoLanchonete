@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form>
+				<p:commandButton value="Nova" action="/mesa/nova.xhtml" ajax="false"/>
+				<br/>
+				<p:dataTable value="#{ListarMesaBeans.mesas}" var="rs" style="width:50%">
+					<f:facet name="header">
+			            Mesas
+			        </f:facet>
+			        <p:column headerText="Area">
+			            <h:outputText value="#{rs.dsArea}" />
+			        </p:column>
+			        <p:column headerText="Descrição">
+			            <h:outputText value="#{rs.dsMesa}" />
+			        </p:column>
+			        <p:column headerText="Aberta" style="text-align: center;">
+			            <h:outputText value="#{rs.aberta}" />
+			        </p:column>
+			        <p:column headerText="Ativa" style="text-align: center;">
+			            <h:outputText value="#{rs.ativa}" />
+			        </p:column>
+			
+			        <p:column headerText="" style="width:25%; text-align: center;">
+			            <p:commandButton value="Editar" action="/mesa/editar.xhtml" ajax="false">
+							<f:param value="#{rs.idMesa}" name="idMesa" />
+						</p:commandButton>
+			        </p:column>
+			    </p:dataTable>
+				
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>
