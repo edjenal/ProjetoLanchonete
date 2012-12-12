@@ -292,10 +292,12 @@ public class FuncBO {
 			sql.append(SQL_findAll);
 			sql.append(" where flAtivo_func = ?");
 			if(!func.getNmFunc().equals("")){
-				sql.append(" and nm_func = ? and ");
+				func.setNmFunc(func.getNmFunc()+"%");
+				sql.append(" and nm_func like ?");
 				st = con.prepareStatement(sql.toString());
 				st.setBoolean(1, func.getFlAtivoFunc());
 				st.setString(2, func.getNmFunc());
+				func.setNmFunc(func.getNmFunc().replaceAll("%", ""));
 			} else {
 				st = con.prepareStatement(sql.toString());
 				st.setBoolean(1, func.getFlAtivoFunc());

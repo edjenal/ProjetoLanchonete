@@ -1,17 +1,16 @@
 package managedbeans.cliente;
 
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import bo.ClienteBO;
-import bo.VendaBO;
-
 import to.ClienteTO;
 import to.VendaTO;
+import bo.ClienteBO;
+import bo.VendaBO;
 
 public class ListarClienteBeans {
 	
@@ -93,6 +92,7 @@ public class ListarClienteBeans {
 	}
 	
 	public void ocultar(ActionEvent e){
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ListarClienteBeans");
 		mostrarTabela = false;
 	}
 	

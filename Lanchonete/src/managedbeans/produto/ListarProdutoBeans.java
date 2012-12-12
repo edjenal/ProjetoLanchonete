@@ -74,6 +74,7 @@ public class ListarProdutoBeans {
 	}
 	
 	public void ocultar(ActionEvent e){
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("ListarProdutoBeans");
 		mostrarTabela = false;
 	}
 	

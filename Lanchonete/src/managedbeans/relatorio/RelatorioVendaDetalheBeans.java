@@ -203,6 +203,7 @@ public class RelatorioVendaDetalheBeans {
 			cleanBeans();
 			trocoTela = troco.toString().replaceAll("\\.", ",");
 			retorno = !vendaBO.update(debito, dt_pag_total, id_venda) ? "/relatorio/balcao/sucesso.xhtml" : null;
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("RelatorioVendaFiltroBeans");
 		} else {
 			valor_desconto_tela = valor_desconto_tela.replaceAll("\\.", ",");
 			recebido = recebido.replaceAll("\\.", ",");

@@ -48,6 +48,13 @@
 						<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
 						<td><p:inputMask id="telefone" value="#{EditarFuncBeans.func.telFunc}" mask="(99)9999-9999" size="13"/></td>
 					</tr>
+					<tr>
+						<td>
+							<p:commandButton value="Add Escala" action="/func/escala.xhtml" ajax="false">
+								<f:param value="#{EditarFuncBeans.func.idFunc}" name="idFunc" />
+							</p:commandButton>
+						</td>
+					</tr>
 				</table>
 				<p:commandButton 
 		  			value="Confirmar" 
