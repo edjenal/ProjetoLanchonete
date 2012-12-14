@@ -8,25 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import to.ClienteTO;
 import to.VendaTO;
 
 public class VendaBO {
 	
-	private String SQL_create = "insert into tb_venda(id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total)" +
-			" values (?, ?, ?, ?, getdate(), ?)";
+	private String SQL_create = "insert into tb_venda(id_cli, id_func, id_mesa, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total)" +
+			" values (?, ?, ?, ?, ?, ?, getdate(), ?)";
 	
 	//private String SQL_id = "select scope_identity() as id";
 	
 	private String SQL_findTop = "select top 1 * from tb_venda order by id_venda desc";
 	
-	private String SQL_findByPrimaryKey = "select id_venda, ven.id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where id_venda = ?";
+	private String SQL_findByPrimaryKey = "select id_venda, ven.id_cli, id_func, id_mesa, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total, nm_cliente from tb_venda ven inner join tb_cliente cli on cli.id_cli = ven.id_cli where id_venda = ?";
 	
 	private String SQL_update = "update tb_venda set valor_debito = ?, dt_pag_total = ? where id_venda = ?";
 	
-	private String SQL_findById_cli = "select id_venda, id_cli, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total from tb_venda where id_cli = ? and valor_debito != 0.0  order by dt_venda desc";
+	private String SQL_findById_cli = "select id_venda, id_cli, id_func, id_mesa, valor_total_venda, valor_desconto_venda, valor_debito, dt_venda, dt_pag_total from tb_venda where id_cli = ? and valor_debito != 0.0  order by dt_venda desc";
 	
-	public Integer insert(int id_cli, Double valor_total_venda, Double valor_desconto_venda, Double valor_debito, Date dt_pag_total) {
+	public Integer insert(VendaTO venda) {
 		Integer id = null;
 		boolean retorno = true;
 		Connection con = Conexao.getConnection();
@@ -36,11 +35,24 @@ public class VendaBO {
 		try {
 			//inserir uma venda
 			st = con.prepareStatement(SQL_create);
-			st.setInt(1, id_cli);
-			st.setDouble(2, valor_total_venda);
-			st.setDouble(3, valor_desconto_venda);
-			st.setDouble(4, valor_debito);
-			st.setDate(5, dt_pag_total);
+			if(venda.getId_cli()!=null){
+				st.setInt(1, venda.getId_cli());
+			} else {
+				st.setNull(1, java.sql.Types.INTEGER);
+			}
+			if(venda.getId_func()!=null){
+				st.setInt(2, venda.getId_func());
+			} else 
+				st.setNull(2, java.sql.Types.INTEGER );
+			if(venda.getId_mesa()!=null){
+				st.setInt(3, venda.getId_mesa());
+			} else {
+				st.setNull(3, java.sql.Types.INTEGER);
+			}
+			st.setDouble(4, venda.getValor_total_venda());
+			st.setDouble(5, venda.getValor_desconto_venda());
+			st.setDouble(6, venda.getValor_debito());
+			st.setDate(7, venda.getDt_pag_total());
 			retorno = st.execute();
 			if(!retorno){
 				//coletar ultimo id inserido
@@ -83,7 +95,8 @@ public class VendaBO {
 		boolean filtarPorData = false;
 		String dt_fim = "";
 		if(inicial!=null && fim!=null){
-			dt_fim = fim.toString() + " 23:59:59";//se nao ia ficar 00:00:00 e nao pegaria ate a ultima hora do dia escolhindo
+			//se nao ia ficar 00:00:00 e nao pegaria ate a ultima hora do dia escolhindo
+			dt_fim = fim.toString() + " 23:59:59";
 			filtarPorData = true;
 			SQL_filtro += "and dt_venda >= ? and dt_venda <= ? ";
 		}

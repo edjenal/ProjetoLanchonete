@@ -12,6 +12,8 @@ public class ProdutoTO {
 	
 	private Integer qtd_venda;
 	
+	private String subValor;
+	
 	public int getId_prod() {
 		return id_prod;
 	}
@@ -54,5 +56,35 @@ public class ProdutoTO {
 	public void setQtd_venda(Integer qtd_venda) {
 		this.qtd_venda = qtd_venda;
 	}
+	public String getSubValor() {
+		Double valor = getQtd_venda() * getPreco_prod();
+		subValor = valor.toString().replaceAll("\\.", ",");
+		return subValor;
+	}
+	public void setSubValor(String subValor) {
+		this.subValor = subValor;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id_prod;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProdutoTO other = (ProdutoTO) obj;
+		if (id_prod != other.id_prod)
+			return false;
+		return true;
+	}
+	
+
 	
 }

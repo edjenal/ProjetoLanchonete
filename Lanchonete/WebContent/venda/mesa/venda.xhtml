@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+	    <f:view>
+			<h:form id="myForm">
+	    		<p:messages/>
+	    		<p:focus/>
+	    		<h:panelGroup id="mesas">
+	    			<table>
+	    				<tr>
+	    					<td><h:outputText value="Mesa:" style="font-size:24px"/></td>
+	    					<td>
+	    						<p:selectOneMenu id="somMesa" value="#{VendaBeans.vendaTO.id_mesa}" required="true" requiredMessage="Mesa Obrigatório!">
+				    				<f:selectItem itemLabel="Selecione" itemValue=""/>
+				    				<f:selectItems value="#{VendaBeans.mesasAbertas}"  var="mesas" itemLabel="#{mesas.dsMesa}" itemValue="#{mesas.idMesa}"/>
+				    				<p:ajax event="change" listener="#{VendaBeans.preencheGracom(VendaBeans.vendaTO.id_mesa)}" process="@form" update="myForm"/>
+				    			</p:selectOneMenu>
+	    					</td>
+	    					<td><h:outputText value="Garçom:" style="font-size:24px"/></td>
+	    					<td>
+	    						<p:selectOneMenu id="somFunc" value="#{VendaBeans.vendaTO.id_func}">
+				    				<f:selectItem itemLabel="Selecione mesa" itemValue=""/>
+					                <f:selectItems value="#{VendaBeans.funcs}" var="funcs" itemLabel="#{funcs.nmFunc}" itemValue="#{funcs.idFunc}"/>
+					            </p:selectOneMenu>
+	    					</td>
+	    				</tr>
+	    			</table>
+	    		</h:panelGroup>
+	    		<h:panelGroup id="produtos">
+	    			<table>
+	    				<tr>
+	    					<td colspan="4" style="text-align: center;">
+	    						<h:outputText value="------ Produto ------" style="font-size:24px"/>
+	    					</td>
+	    				</tr>
+						<tr>
+							<td><h:outputText value="Categoria:" style="font-size:24px"/></td>
+							<td><p:selectOneMenu id="id_cat" value="#{VendaBeans.id_cat}"> 
+									<f:selectItems value="#{VendaBeans.categorias}"  var="categoria" itemLabel="#{categoria.ds_cat}" itemValue="#{categoria.id_cat}"/>
+								</p:selectOneMenu></td>
+							<td><h:outputText value="Descrição:" style="font-size:24px"/></td>
+							<td><p:inputText value="#{VendaBeans.nome}" /></td>
+							<td><h:outputText value="Quantidade:" style="font-size:24px"/></td>
+							<td><p:inputText value="#{VendaBeans.qtd}" /></td>
+							<td>
+								<p:commandButton value="Buscar"
+								action="#{VendaBeans.buscar}" ajax="false"/>
+							</td>
+						</tr>
+					</table>
+					<p:dataTable value="#{VendaBeans.produtos}" var="rs">
+						<f:facet name="header">
+				            Lista de Produtos
+				        </f:facet>
+				        <p:column headerText="Categoria">
+				            <h:outputText value="#{rs.ds_cat}" style="width:25%"/>
+				        </p:column>
+				
+				        <p:column headerText="Descrição" style="width:50%">
+				            <h:outputText value="#{rs.ds_prod}" />
+				        </p:column>
+				
+				        <p:column headerText="Valor" style="width:0%; text-align: right;">
+				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+				        </p:column>
+				
+				        <p:column headerText="" style="text-align: center;">
+				           <p:commandButton value="Escolher" action="#{VendaBeans.addProduto(VendaBeans.qtd, rs)}" ajax="false"/>
+				        </p:column>
+				    </p:dataTable>
+	    		</h:panelGroup>
+	    		<br />
+	    		<h:panelGroup id="produtosEscolhidos">
+	    			<p:dataTable value="#{VendaBeans.produtosSelecionados}" var="rs" emptyMessage="Nenhum produto escolhido.">
+						<f:facet name="header">
+				            Produtos Escolhidos
+				        </f:facet>
+				        <p:column headerText="Categoria" style="width:32%">
+				            <h:outputText value="#{rs.ds_cat}" />
+				        </p:column>
+				
+				        <p:column headerText="Descrição" style="width:50%">
+				            <h:outputText value="#{rs.ds_prod}" />
+				        </p:column>
+						<p:column headerText="Quant." style="width:5%; text-align:center">
+				            <h:outputText value="#{rs.qtd_venda}" />
+				        </p:column>
+				        
+				        <p:column headerText="Valor Unitário" style="width:8%">
+				            <h:outputText value="R$ "/><h:outputText value="#{rs.preco_prod_tela}" />
+				        </p:column>
+				        
+				        <p:column headerText="Sub-Total" style="width:8%">
+				            <h:outputText value="R$ "/><h:outputText value="#{rs.subValor}" />
+				        </p:column>
+				        
+				        <p:column headerText="Excluir ?" style="width:5%; text-align:center">
+				            <h:commandButton value="Sim" action="#{VendaBeans.removerProduto}">
+								<f:param value="#{rs}" name="produto" />
+							</h:commandButton>
+				        </p:column>
+				        
+				    </p:dataTable>
+	    		</h:panelGroup>
+	    		<p:commandButton value="Salvar" action="#{VendaBeans.salva}" update="myForm" rendered="#{!VendaBeans.produtosSelecionados.isEmpty()}"/>
+	    	</h:form>
+	    </f:view>
+	</ui:define>
+</ui:composition>
+</html>

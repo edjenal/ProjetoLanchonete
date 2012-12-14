@@ -20,39 +20,71 @@
 						<th colspan="2" style="font-size:24px"> Editar Funcionário </th>
 					</tr>
 					<tr>
-						<td><h:outputLabel value="Departamento" for="idDep" style="font-size:24px"/></td>
 						<td>
-							<p:selectOneMenu id="idDep" value="#{EditarFuncBeans.func.idDepFunc}"> 
-								<f:selectItems value="#{EditarFuncBeans.deps}"  var="dep" itemLabel="#{dep.dsDepFUnc}" itemValue="#{dep.idDepFunc}"/>
-							</p:selectOneMenu>
+							<table>
+								<tr>
+									<td><h:outputLabel value="Departamento" for="idDep" style="font-size:24px"/></td>
+									<td>
+										<p:selectOneMenu id="idDep" value="#{EditarFuncBeans.func.idDepFunc}"> 
+											<f:selectItems value="#{EditarFuncBeans.deps}"  var="dep" itemLabel="#{dep.dsDepFUnc}" itemValue="#{dep.idDepFunc}"/>
+										</p:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td><h:outputLabel value="Nome:" for="nome" style="font-size:24px"/></td>
+									<td><p:inputText id="nome" value="#{EditarFuncBeans.func.nmFunc}" required="true" requiredMessage="Nome é obrigatório"/></td>
+								</tr>
+								<tr>
+									<td><h:outputLabel value="Ativo:" for="ativo" style="font-size:24px"/></td>
+									<td><p:selectOneMenu id="ativo" value="#{EditarFuncBeans.func.flAtivoFunc}">
+											<f:selectItem itemValue="#{true}" itemLabel="Sim"/>
+											<f:selectItem itemValue="#{false}" itemLabel="Não"/>
+										</p:selectOneMenu>
+									</td>
+								</tr>
+								
+								<tr>
+									<td><h:outputLabel value="CPF:" for="cpf" style="font-size:24px"/></td>
+									<td><h:outputLabel id="cpf" style="font-size:24px" value="#{EditarFuncBeans.func.cpfFunc}" /></td>
+								</tr>
+								<tr>
+									<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
+									<td><p:inputMask id="telefone" value="#{EditarFuncBeans.func.telFunc}" mask="(99)9999-9999" size="13"/></td>
+								</tr>
+							</table>
 						</td>
-					</tr>
-					<tr>
-						<td><h:outputLabel value="Nome:" for="nome" style="font-size:24px"/></td>
-						<td><p:inputText id="nome" value="#{EditarFuncBeans.func.nmFunc}" required="true" requiredMessage="Nome é obrigatório"/></td>
-					</tr>
-					<tr>
-						<td><h:outputLabel value="Ativo:" for="ativo" style="font-size:24px"/></td>
-						<td><p:selectOneMenu id="ativo" value="#{EditarFuncBeans.func.flAtivoFunc}">
-								<f:selectItem itemValue="#{true}" itemLabel="Sim"/>
-								<f:selectItem itemValue="#{false}" itemLabel="Não"/>
-							</p:selectOneMenu>
-						</td>
-					</tr>
-					
-					<tr>
-						<td><h:outputLabel value="CPF:" for="cpf" style="font-size:24px"/></td>
-						<td><h:outputLabel id="cpf" style="font-size:24px" value="#{EditarFuncBeans.func.cpfFunc}" /></td>
-					</tr>
-					<tr>
-						<td><h:outputLabel value="Telefone:" for="telefone" style="font-size:24px"/></td>
-						<td><p:inputMask id="telefone" value="#{EditarFuncBeans.func.telFunc}" mask="(99)9999-9999" size="13"/></td>
-					</tr>
-					<tr>
-						<td>
-							<p:commandButton value="Add Escala" action="/func/escala.xhtml" ajax="false">
-								<f:param value="#{EditarFuncBeans.func.idFunc}" name="idFunc" />
-							</p:commandButton>
+						<td valign="top">
+							<table>
+								<tr>
+									<td>
+										<p:dataTable value="#{EditarFuncBeans.turnosFunc}" var="rs" emptyMessage="Sem Turno associado.">
+											<f:facet name="header">
+									            Turno(s)
+									        </f:facet>
+									        <p:column headerText="Descrição" style="width:40%" sortBy="#{rs.dsTurno}">
+									            <h:outputText value="#{rs.dsTurno}" />
+									        </p:column>
+									    </p:dataTable>
+									</td>
+									<td>
+										<p:dataTable value="#{EditarFuncBeans.areasFunc}" var="rs" emptyMessage="Sem Área associada.">
+											<f:facet name="header">
+									            Área(s)
+									        </f:facet>
+									        <p:column headerText="Descrição" style="width:40%" sortBy="#{rs.dsArea}">
+									            <h:outputText value="#{rs.dsArea}" />
+									        </p:column>
+									    </p:dataTable>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<p:commandButton value="Nova Escala" action="/func/escala.xhtml" ajax="false">
+											<f:param value="#{EditarFuncBeans.func.idFunc}" name="idFunc" />
+										</p:commandButton>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 				</table>

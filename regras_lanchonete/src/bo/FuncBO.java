@@ -18,6 +18,12 @@ public class FuncBO {
 			"from tb_func f inner join tb_dep_func d on f.id_dep_func = d.id_dep_func ";
 	private String SQL_findByDep = "select id_func, d.id_dep_func, flAtivo_func, nm_func, cpf_func, tel_func, ds_dep_func " +
 			"from tb_func f inner join tb_dep_func d on f.id_dep_func = d.id_dep_func where d.id_dep_func = ?";
+	private String SQL_findByArea = "select f.id_func, d.id_dep_func, flAtivo_func, nm_func, cpf_func, tel_func, ds_dep_func " +
+			"from tb_func f inner join tb_dep_func d on f.id_dep_func = d.id_dep_func " +
+			" inner join tb_area_func af on af.id_func = f.id_func" +
+			" inner join tb_mesa m on m.id_area = af.id_area" +
+			" where m.id_area = ?" +
+			" group by f.id_func, d.id_dep_func, flAtivo_func, nm_func, cpf_func, tel_func, ds_dep_func";
 	private String SQL_findByCpf = "select id_func, d.id_dep_func, flAtivo_func, nm_func, cpf_func, tel_func, ds_dep_func " +
 			"from tb_func f inner join tb_dep_func d on f.id_dep_func = d.id_dep_func where cpf_func = ?";
 	
@@ -205,14 +211,14 @@ public class FuncBO {
 		}
 	}
 	
-	public List<FuncTO> findByDep(int idArea) {
+	public List<FuncTO> findByDep(int idDep) {
 		List<FuncTO> retorno = new ArrayList<FuncTO>();
 		Connection con = Conexao.getConnection();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = con.prepareStatement(SQL_findByDep);
-			st.setInt(1, idArea);
+			st.setInt(1, idDep);
 			rs = st.executeQuery();
 			while (rs.next()) {
 				FuncTO funcTO = new FuncTO();
@@ -230,6 +236,43 @@ public class FuncBO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Falha ao buscar funcionario pelo departamento");
+			return null;
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<FuncTO> findByArea(int idArea) {
+		List<FuncTO> retorno = new ArrayList<FuncTO>();
+		Connection con = Conexao.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = con.prepareStatement(SQL_findByArea);
+			st.setInt(1, idArea);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				FuncTO funcTO = new FuncTO();
+				funcTO.setIdFunc(rs.getInt("id_func"));
+				funcTO.setIdDepFunc(rs.getInt("id_dep_func"));
+				funcTO.setDsDepFunc(rs.getString("ds_dep_func"));
+				funcTO.setFlAtivoFunc(rs.getBoolean("flativo_func"));
+				funcTO.setNmFunc(rs.getString("nm_func"));
+				funcTO.setCpfFunc(rs.getString("cpf_func"));
+				funcTO.setTelFunc(rs.getString("tel_func"));
+				funcTO.setDsDepFunc(rs.getString("ds_dep_func"));
+				retorno.add(funcTO);
+			} 
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Falha ao buscar funcionario pela area");
 			return null;
 		} finally {
 			try {

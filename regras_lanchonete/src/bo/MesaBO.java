@@ -220,4 +220,41 @@ public class MesaBO {
 			}
 		}
 	}
+	
+	public List<MesaTO> findByNotOpen() {
+		List<MesaTO> retorno = new ArrayList<MesaTO>();
+		Connection con = Conexao.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append(SQL_findAll);
+			sql.append(" where flAtivo_mesa = 'true' and flAberta_mesa = 'false'");
+			st = con.prepareStatement(sql.toString());
+			rs = st.executeQuery();
+			while (rs.next()) {
+				MesaTO mesaTO = new MesaTO();
+				mesaTO.setIdMesa(rs.getInt("id_mesa"));
+				mesaTO.setIdArea(rs.getInt("id_area"));
+				mesaTO.setDsArea(rs.getString("ds_area"));
+				mesaTO.setDsMesa(rs.getString("ds_mesa"));
+				mesaTO.setFlAtivoMesa(rs.getBoolean("flAtivo_mesa"));
+				mesaTO.setFlAbertaMesa(rs.getBoolean("flAberta_mesa"));
+				retorno.add(mesaTO);
+			} 
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Falha ao buscar mesas abertas");
+			return null;
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

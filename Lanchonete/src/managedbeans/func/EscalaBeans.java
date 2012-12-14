@@ -6,12 +6,16 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
+import to.AreaFuncTO;
 import to.AreaTO;
 import to.FuncTO;
+import to.TurnoFuncTO;
 import to.TurnoTO;
 import bo.AreaBO;
+import bo.AreaFuncBO;
 import bo.FuncBO;
 import bo.TurnoBO;
+import bo.TurnoFuncBO;
 
 public class EscalaBeans {
 	private FuncTO func = new FuncTO();
@@ -23,8 +27,6 @@ public class EscalaBeans {
 	private List<TurnoTO> turnosEscolhidos = new ArrayList<TurnoTO>();
 	
 	private List<AreaTO> areasEscolhidas = new ArrayList<AreaTO>();
-	
-	private boolean mostrarBtSalvar = false;
 
 	public FuncTO getFunc() {
 		String vazia  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idFunc");
@@ -33,11 +35,6 @@ public class EscalaBeans {
 			func = funcBO.findByPrimaryKey(Integer.parseInt(vazia));
 		}
 		return func;
-	}
-	
-	private void validaMostrarBT(){
-		mostrarBtSalvar = turnosEscolhidos.isEmpty() ? false : true;
-		mostrarBtSalvar = areasEscolhidas.isEmpty() ? false : true;
 	}
 	
 	public void addTurno(){
@@ -53,7 +50,6 @@ public class EscalaBeans {
 				turno.setDsTurno(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("dsTurno"));
 				turnosEscolhidos.add(turno);
 			}
-			validaMostrarBT();
 		}
 	}
 	
@@ -70,7 +66,6 @@ public class EscalaBeans {
 				areaTO.setDsArea(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("dsArea"));
 				areasEscolhidas.add(areaTO);
 			}
-			validaMostrarBT();
 		}
 	}
 	
@@ -78,19 +73,39 @@ public class EscalaBeans {
 		//pegar objeto da sessão
 		Map<String, Object> contexto = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
 		turnosEscolhidos.remove((TurnoTO) contexto.get("rs2"));
-		validaMostrarBT();
 	}
 	
 	public void removerArea(){
 		//pegar objeto da sessão
 		Map<String, Object> contexto = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
 		areasEscolhidas.remove((AreaTO) contexto.get("rs4"));
-		validaMostrarBT();
 	}
 	
 	public String salvar(){
 		System.out.println("Aqui");
-		return null;
+		boolean salvouTudo = false;
+		TurnoFuncBO turnoFuncBO = new TurnoFuncBO();
+		turnoFuncBO.remove(func.getIdFunc());
+		if(!turnosEscolhidos.isEmpty()){
+			for(TurnoTO turno : turnosEscolhidos){
+				TurnoFuncTO turnoFuncTO = new TurnoFuncTO();
+				turnoFuncTO.setIdFunc(func.getIdFunc());
+				turnoFuncTO.setIdTurno(turno.getIdTurno());
+				salvouTudo = turnoFuncBO.insert(turnoFuncTO);
+			}
+		}
+		AreaFuncBO areaFuncBO = new AreaFuncBO();
+		areaFuncBO.remove(func.getIdFunc());
+		if(!areasEscolhidas.isEmpty()){
+			for(AreaTO area : areasEscolhidas){
+				AreaFuncTO areaFuncTO = new AreaFuncTO();
+				areaFuncTO.setIdFunc(func.getIdFunc());
+				areaFuncTO.setIdArea(area.getIdArea());
+				salvouTudo = areaFuncBO.insert(areaFuncTO);
+			}
+		}
+		//só chemei o cancelar pq ele mata o bean e retorna para a listagem de funcionarios
+		return salvouTudo ? null : cancelar();
 	}
 	
 	public String cancelar(){
@@ -136,14 +151,6 @@ public class EscalaBeans {
 
 	public void setAreasEscolhidas(List<AreaTO> areasEscolhidas) {
 		this.areasEscolhidas = areasEscolhidas;
-	}
-
-	public boolean isMostrarBtSalvar() {
-		return mostrarBtSalvar;
-	}
-
-	public void setMostrarBtSalvar(boolean mostrarBtSalvar) {
-		this.mostrarBtSalvar = mostrarBtSalvar;
 	}
 	
 	

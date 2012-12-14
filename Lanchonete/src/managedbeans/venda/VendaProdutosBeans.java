@@ -10,6 +10,7 @@ import javax.faces.event.ActionEvent;
 
 import to.CategoriaTO;
 import to.ProdutoTO;
+import to.VendaTO;
 import bo.CategoriaBO;
 import bo.ClienteBO;
 import bo.ProdutoBO;
@@ -265,7 +266,13 @@ public class VendaProdutosBeans {
 			Date dt_pag_total = debito > 0 ? null : new Date(data.getTime());
 			VendaBO vendaBO = new VendaBO();
 			//retorno é o id_venda casatrada
-			Integer id_venda = vendaBO.insert(id_cli, total, desc, debito, dt_pag_total);
+			VendaTO vend = new VendaTO();
+			vend.setId_cli(id_cli);
+			vend.setValor_total_venda(total);
+			vend.setValor_desconto_venda(desc);
+			vend.setValor_debito(debito);
+			vend.setDt_pag_total(dt_pag_total);
+			Integer id_venda = vendaBO.insert(vend);
 			//inserindo na tabela venda_produto
 			for(int i = 0; i<produtosSelecionados.size(); i++){
 				VendaProdutoBO vendaProdutoBO = new VendaProdutoBO();

@@ -13,84 +13,86 @@
 			<h:form>
 				<h:outputLabel id="func" value="Funcionário: #{EscalaBeans.func.nmFunc}"
 					style="font-size:24px" />
-				<h:panelGroup id="turno">
-					<p:dataTable value="#{EscalaBeans.turnos}" var="rs" style="width:50%">
-						<f:facet name="header">
-			            Turnos
-			        	</f:facet>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{rs.dsTurno}" />
-						</p:column>
+				<table>
+				<tr>
+					<td>
+						<p:dataTable value="#{EscalaBeans.turnos}" var="rs"
+								style="width:50%">
+							<f:facet name="header">
+				            Turnos
+				        	</f:facet>
+							<p:column headerText="Descrição">
+								<h:outputText value="#{rs.dsTurno}" />
+							</p:column>
 
-						<p:column headerText="" style="width:40%; text-align: center;">
-							<p:commandButton value="Escolher"
-								action="#{EscalaBeans.addTurno}" ajax="false">
-								<f:param value="#{rs.idTurno}" name="idTurno" />
-								<f:param value="#{rs.dsTurno}" name="dsTurno" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-				
-				<h:panelGroup id="turnosEscolhidos">
-					<p:dataTable value="#{EscalaBeans.turnosEscolhidos}" var="rs2"
+							<p:column headerText="" style="width:40%; text-align: center;">
+								<p:commandButton value="Escolher"
+									action="#{EscalaBeans.addTurno}" ajax="false">
+									<f:param value="#{rs.idTurno}" name="idTurno" />
+									<f:param value="#{rs.dsTurno}" name="dsTurno" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						</td>
+					<td valign="top">
+						<p:dataTable value="#{EscalaBeans.turnosEscolhidos}" var="rs2"
 						style="width:50%" emptyMessage="Nenhum Turno escolhido">
-						<f:facet name="header">
-			            Turnos Escolhidos
-			        </f:facet>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{rs2.dsTurno}" />
-						</p:column>
-						<p:column headerText="Remover ?"
-							style="width:5%; text-align:center">
-							<h:commandButton value="Sim" action="#{EscalaBeans.removerTurno}">
-								<f:param value="#{rs2}" name="turno" />
-							</h:commandButton>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-				
-				<h:panelGroup id="area">
-					<p:dataTable value="#{EscalaBeans.areas}" var="rs3" style="width:50%">
-						<f:facet name="header">
-			            Areas
-			        	</f:facet>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{rs3.dsArea}" />
-						</p:column>
-
-						<p:column headerText="" style="width:40%; text-align: center;">
-							<p:commandButton value="Escolher"
-								action="#{EscalaBeans.addArea}" ajax="false">
-								<f:param value="#{rs3.idArea}" name="idArea" />
-								<f:param value="#{rs3.dsArea}" name="dsArea" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-				
-				<h:panelGroup id="areassEscolhidas">
-					<p:dataTable value="#{EscalaBeans.areasEscolhidas}" var="rs4"
-						style="width:50%" emptyMessage="Nenhuma Área escolhida">
-						<f:facet name="header">
-			            Areas Escolhidas
-			        </f:facet>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{rs4.dsArea}" />
-						</p:column>
-						<p:column headerText="Remover ?"
-							style="width:5%; text-align:center">
-							<h:commandButton value="Sim" action="#{EscalaBeans.removerArea}">
-								<f:param value="#{rs4}" name="area" />
-							</h:commandButton>
-						</p:column>
-					</p:dataTable>
-				</h:panelGroup>
-				
-				<h:panelGroup id="funcoes" rendered="#{EscalaBeans.mostrarBtSalvar}">
-					<p:commandButton value="Salvar" action="#{EscalaBeans.salvar}"/>
-				</h:panelGroup>
-					<p:commandButton value="Cancelar" action="#{EscalaBeans.cancelar}"/>
+							<f:facet name="header">
+				            Turnos Escolhidos
+				        	</f:facet>
+							<p:column headerText="Descrição">
+								<h:outputText value="#{rs2.dsTurno}" />
+							</p:column>
+							<p:column headerText="Remover ?"
+								style="width:5%; text-align:center">
+								<h:commandButton value="Sim" action="#{EscalaBeans.removerTurno}">
+									<f:param value="#{rs2}" name="turno" />
+								</h:commandButton>
+							</p:column>
+						</p:dataTable>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:dataTable value="#{EscalaBeans.areas}" var="rs3" style="width:50%">
+							<f:facet name="header">
+				            Areas
+				        	</f:facet>
+							<p:column headerText="Descrição">
+								<h:outputText value="#{rs3.dsArea}" />
+							</p:column>
+	
+							<p:column headerText="" style="width:40%; text-align: center;">
+								<p:commandButton value="Escolher"
+									action="#{EscalaBeans.addArea}" ajax="false">
+									<f:param value="#{rs3.idArea}" name="idArea" />
+									<f:param value="#{rs3.dsArea}" name="dsArea" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</td>
+					<td valign="top">
+						<p:dataTable value="#{EscalaBeans.areasEscolhidas}" var="rs4"
+								style="width:50%" emptyMessage="Nenhuma Área escolhida">
+								<f:facet name="header">
+				            Areas Escolhidas
+					        </f:facet>
+							<p:column headerText="Descrição">
+								<h:outputText value="#{rs4.dsArea}" />
+							</p:column>
+							<p:column headerText="Remover ?"
+								style="width:5%; text-align:center">
+								<h:commandButton value="Sim"
+									action="#{EscalaBeans.removerArea}">
+									<f:param value="#{rs4}" name="area" />
+								</h:commandButton>
+							</p:column>
+						</p:dataTable>
+					</td>
+				</tr>
+				</table>
+				<p:commandButton value="Salvar" action="#{EscalaBeans.salvar}"/>
+				<p:commandButton value="Cancelar" action="#{EscalaBeans.cancelar}"/>
 			</h:form>
 		</f:view>
 	</ui:define>

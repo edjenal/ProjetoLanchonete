@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 public class VendaTO {
 	//.toString().replaceAll("\\.", ",")
 	private int id_venda;
-	private int id_cli;
+	private Integer id_cli;
+	private Integer id_func;
+	private Integer id_mesa;
 	private Double valor_total_venda;
 	private Double valor_desconto_venda;
 	private Double valor_debito;
@@ -30,11 +32,23 @@ public class VendaTO {
 	public void setId_venda(int id_venda) {
 		this.id_venda = id_venda;
 	}
-	public int getId_cli() {
+	public Integer getId_cli() {
 		return id_cli;
 	}
-	public void setId_cli(int id_cli) {
+	public void setId_cli(Integer id_cli) {
 		this.id_cli = id_cli;
+	}
+	public Integer getId_func() {
+		return id_func;
+	}
+	public void setId_func(Integer id_func) {
+		this.id_func = id_func;
+	}
+	public Integer getId_mesa() {
+		return id_mesa;
+	}
+	public void setId_mesa(Integer id_mesa) {
+		this.id_mesa = id_mesa;
 	}
 	public Double getValor_total_venda() {
 		return valor_total_venda;

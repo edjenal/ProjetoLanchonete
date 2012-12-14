@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+<ui:composition template="/tema.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form>
+				<table>
+					<tr>
+						<td>
+							<p:dataTable value="#{ListEscalaBeans.areas}" var="rs">
+								<f:facet name="header">
+						            Áreas
+						        </f:facet>
+						        <p:column headerText="Descrição" style="width:40%" sortBy="#{rs.dsArea}">
+						            <h:outputText value="#{rs.dsArea}" />
+						        </p:column>
+						        <p:column headerText="Funcionários">
+						            <p:dataTable value="#{ListEscalaBeans.areaFunc.findAllByidArea(rs.idArea)}" var="rs2" emptyMessage="Nenhum">
+								        <p:column >
+								            <h:outputText value="#{rs2.nmFunc}" />
+								        </p:column>
+								    </p:dataTable>
+						        </p:column>
+						    </p:dataTable>
+						</td>
+						<td>
+							<p:dataTable value="#{ListEscalaBeans.turnos}" var="rs">
+								<f:facet name="header">
+						            Turnos
+						        </f:facet>
+						        <p:column headerText="Descrição" style="width:40%" sortBy="#{rs.dsTurno}">
+						            <h:outputText value="#{rs.dsTurno}" />
+						        </p:column>
+						        <p:column headerText="Funcionários">
+						            <p:dataTable value="#{ListEscalaBeans.turnoFunc.findAllByidTurno(rs.idTurno)}" var="rs2" emptyMessage="Nenhum">
+								        <p:column >
+								            <h:outputText value="#{rs2.nmFunc}" />
+								        </p:column>
+								    </p:dataTable>
+						        </p:column>
+						    </p:dataTable>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>
