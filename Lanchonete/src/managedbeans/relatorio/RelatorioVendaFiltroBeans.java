@@ -124,7 +124,9 @@ public class RelatorioVendaFiltroBeans {
 	    pdf.open();
 	    
 	    PdfPTable tabela = new PdfPTable(3); //cria uma tabela com 3 colunas
-	    PdfPCell celula1 = new PdfPCell(Image.getInstance("/imagens/sanduiche1.jpg")); //cria uma celula com parametro de Image.getInstance com o caminho da imagem do cabeçalho
+	    
+	    //cria uma celula com parametro de Image.getInstance com o caminho da imagem do cabeçalho
+	    PdfPCell celula1 = new PdfPCell(Image.getInstance("/imagens/sanduiche1.jpg")); 
 
 	    Paragraph p = new Paragraph("Lista de Vendas"); 
 	    PdfPCell celula2 = new PdfPCell(p); //adiciona o paragrafo com o titulo na segunda celula.
